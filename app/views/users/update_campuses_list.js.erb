@@ -1,0 +1,6 @@
+$('#campus-label').remove();
+$('#user_campus_id').remove();
+<% if @campuses.any? %>
+$('#edit-institution').append('<%= escape_javascript(label :selected_campus, :id, "Campus", id: "campus-label") %>')
+$('#edit-institution').append('<%= escape_javascript(collection_select :selected_campus, :id, @campuses, :id, :name, include_blank: true) %>')
+<% end %>

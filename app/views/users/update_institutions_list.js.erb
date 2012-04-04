@@ -1,0 +1,2 @@
+$('#selected_institution_id').html('<option value=""></option><%= escape_javascript(options_for_select(@institutions.map {|ins| [ins.name, ins.id]})) %>');
+$('#user_campus_id').remove();

@@ -14,3 +14,27 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+jQuery.ajaxSetup({
+  'beforeSend': function(xhr) { xhr.setRequestHeader("Accept", "text/javascript") }
+});
+
+$.fn.selectInstitutionsWithAjax = function() {
+  var that = this;
+
+  this.change(function() {
+    $.post(that.attr('action'), {state: that.val()}, null, "script");
+  });
+}
+
+$.fn.selectCampusesWithAjax = function() {
+  var that = this;
+
+  this.change(function() {
+    $.post(that.attr('action'), {ins: that.val()}, null, "script");
+  });
+}
+
+$(document).ready(function() {
+  $("#selected_institution_state").selectInstitutionsWithAjax();
+  $("#selected_institution_id").selectCampusesWithAjax();
+})

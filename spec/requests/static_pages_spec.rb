@@ -8,8 +8,6 @@ describe "Static pages" do
     
     before { visit root_path }
   
-    it { page.should have_selector('h1', text: "Nations' Service") }
-  
     it "should have the base title" do
       page.should have_selector('title',
                         text: "Nations' Service")

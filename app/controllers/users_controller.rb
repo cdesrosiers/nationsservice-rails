@@ -23,14 +23,30 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @selected_institution = Institution.new
+    @institutions = []
   end
   
   def update
-    if @user.update_attributes(params[:user])
+    user_params = params[:user]
+    
+    if params[:selected_institution][:id].present?
+      user_params[:institution_id] = params[:selected_institution][:id]
+      
+      if params[:selected_campus].present? && params[:selected_campus][:id].present?
+        user_params[:campus_id] = params[:selected_campus][:id]
+      else
+        user_params[:campus_id] = nil
+      end
+    end
+    
+    if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
       sign_in @user
       redirect_to @user
     else
+      @selected_institution = Institution.new
+      @institutions = []
       render 'edit'
     end
   end
@@ -44,6 +60,37 @@ class UsersController < ApplicationController
     flash[:success] = "User destroyed."
     redirect_to users_path
   end
+  
+  # AJAX actions ---------------------------------------------------
+  
+  def update_institutions_list
+    #update the institutions list based on the selected state
+    if(params[:state].present?)
+      @institutions = Institution.where("state = ?", params[:state]).order(:name)
+    else
+      @institutions = []
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  def update_campuses_list
+    #update the campuses list based on the selected institution
+    if(params[:ins].present?)
+      @campuses = Campus.where("institution_id = ?", params[:ins])
+      @selected_campus = Campus.new
+    else
+      @campuses = []
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  # private methods ----------------------------------------------------
   
   private
   

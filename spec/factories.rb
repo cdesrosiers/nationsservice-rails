@@ -9,4 +9,14 @@ FactoryGirl.define do
       admin true
     end
   end
+  
+  factory :institution do
+    sequence(:name) { |n| "University #{n} of Foobar" }
+    sequence(:state) { |n| "S#{n}" }
+  end
+  
+  factory :campus do
+    sequence(:name) { |n| "Campus #{n}" }
+    institution
+  end
 end

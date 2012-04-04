@@ -15,6 +15,10 @@ Nationsservice::Application.routes.draw do
   match '/signin', to: 'sessions#new'
   
   match '/signout', to: 'sessions#destroy', via: :delete
+  
+  match '/users/update_institutions_list', to: 'users#update_institutions_list'
+  
+  match '/users/update_campuses_list', to: 'users#update_campuses_list'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

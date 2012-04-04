@@ -185,6 +185,7 @@ DEPENDENCIES
   guard-rspec (= 0.5.5)
   guard-spork (= 0.3.2)
   jquery-rails (= 2.0.0)
+  nokogiri (= 1.5.2)
   pg
   rails (= 3.2.2)
   rspec-rails (~> 2.8.rc)

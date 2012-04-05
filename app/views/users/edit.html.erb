@@ -4,7 +4,7 @@
 <div class="row">
   <div class="span6 offset3">
   <%= form_tag(@user, method: :put) do %>
-      <%= render 'shared/error_messages' %>
+    <%= render 'shared/error_messages' %>
     <%= label :user, :name %>
     <%= text_field :user, :name %>
 
@@ -14,16 +14,10 @@
     <%= label :user, :password %>
     <%= password_field :user, :password %>
 
-    <%= label :user, :password_confirmation, "Confirmation" %>
+    <%= label :user, :password_confirmation, "Confirm Password" %>
     <%= password_field :user, :password_confirmation %>
     
-    <div id="edit-institution">
-      <%= label :selected_institution, :state%>
-      <%= collection_select :selected_institution, :state, Institution.select(:state).uniq.reorder(:state), :state, :state, { include_blank: true }, action: "/users/update_institutions_list" %>
-      
-      <%= label :selected_institution, :id, "Institution" %>  
-      <%= collection_select :selected_institution, :id, @institutions, :id, :name, { include_blank: true }, action: "/users/update_campuses_list"  %>
-    </div>
+    <%= render 'users/edit_institution'%>
 
     <%= submit_tag "Save changes", :class => "btn btn-large btn-primary" %>
       

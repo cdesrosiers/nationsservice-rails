@@ -36,5 +36,5 @@ $.fn.selectCampusesWithAjax = function() {
 
 $(document).ready(function() {
   $("#selected_institution_state").selectInstitutionsWithAjax();
-  $("#selected_institution_id").selectCampusesWithAjax();
+  $("#user_institution_id").selectCampusesWithAjax();
 })

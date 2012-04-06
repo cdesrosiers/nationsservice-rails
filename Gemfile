@@ -36,3 +36,5 @@ group :test do
   gem 'cucumber-rails', '1.2.1'
   gem 'database_cleaner', '0.7.0'
 end
+
+gem "watu_table_builder", :require => "table_builder"

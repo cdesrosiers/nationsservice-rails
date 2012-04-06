@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <%= logo_for position, width: 100 %>
+  </td>
+  <td>
+    <%= link_to position.name, position %>
+  </td>
+  <td>
+    <%= full_location_for position %>
+  </td>
+  <td>
+    <% if !position.deadline.nil? %>
+      <%= position.deadline.to_s(:long) %>
+    <% end %>
+  </td>
+  <td>
+    <% if !position.description.nil? %>
+      <%= position.description %></br>
+    <% end %>
+  </td>
+</tr>

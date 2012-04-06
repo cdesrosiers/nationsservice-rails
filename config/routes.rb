@@ -1,5 +1,6 @@
 Nationsservice::Application.routes.draw do
   resources :users
+  resources :positions
   resources :sessions, only: [:new, :create, :destroy]
 
   root to: 'static_pages#home'

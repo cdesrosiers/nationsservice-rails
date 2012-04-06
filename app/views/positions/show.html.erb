@@ -1,0 +1,22 @@
+<% provide(:title, @position.name) %>
+<div class="row">
+  <div class="span16">
+    <section>
+      <h1>
+        <%= logo_for @position %>
+      </h1>
+      <p>
+        <%= @position.name %></br>
+        Application deadline:
+        <% if !@position.deadline.nil? %>
+          <%= @position.deadline.to_s(:long) %>
+        <% end %></br>
+        Location: <%= @position.location_city %><% if !@position.location_state.nil? %>, <%= @position.location_state %><% end %><% if !@position.location_country.nil? %>, <%= @position.location_country %><% end %></br>
+        Type: <%= position_type @position %></br>
+        <% if !@position.description.nil? %>
+          <%= @position.description %></br>
+        <% end %>
+      </p>
+    </section>
+  </div>
+</div>

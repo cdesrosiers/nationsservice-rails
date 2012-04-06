@@ -187,6 +187,22 @@ input, textarea, select, .uneditable-input {
   }
 }
 
+.positions {
+  margin: 0;
+  tr {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter
+    }
+    td {
+        border-left: 1px solid $grayLighter;
+        border-right: 1px solid $grayLighter;
+    }
+  }
+}
+
 #edit-institution {
     background-color: #F5F5F5;
     border: 1px solid rgba(0, 0, 0, 0.15);

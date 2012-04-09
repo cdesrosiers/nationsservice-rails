@@ -20,6 +20,8 @@ Nationsservice::Application.routes.draw do
   match '/users/update_institutions_list', to: 'users#update_institutions_list'
   
   match '/users/update_campuses_list', to: 'users#update_campuses_list'
+  
+  match '/calview', to: 'positions#index_calview'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,6 +1,7 @@
 <%= provide(:title, 'All Positions') %>
 <h1>All Positions</h1>
 
+<p><%= link_to "Calendar View", "/calview" %></p>
 <%= will_paginate %>
 
 <table class="positions">
@@ -22,8 +23,3 @@
 </table>
 
 <%= will_paginate %>
-
-<div id="calendar">
-  <%= table_for @positions do |calendar| %>
-  <% end %>
-</div>

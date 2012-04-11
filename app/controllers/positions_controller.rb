@@ -25,6 +25,7 @@ class PositionsController < ApplicationController
       flash[:success] = "Position updated"
       redirect_to @position
     else
+      prefill_institution_form
       render 'edit'
     end
   end

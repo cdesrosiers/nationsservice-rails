@@ -6,7 +6,7 @@
     <%= link_to position.name, position %>
   </td>
   <td>
-    <%= full_location_for position %>
+    <%= city_for position %>
   </td>
   <td>
     <% if !position.deadline.nil? %>
@@ -16,6 +16,23 @@
   <td>
     <% if !position.description.nil? %>
       <%= position.description %></br>
+    <% end %>
+  </td>
+  <td>
+    <% if !position.duration.nil? %>
+      <%= distance_of_time(61.weeks)  %></br>
+    <% end %>
+  </td>
+  <td>
+    <% if !position.institution_id.nil? %>
+      <%= Institution.find_by_id(position.institution_id).name %>
+    <% else %>
+      Open
+    <% end %>
+  </td>
+  <td>
+    <% if !position.poster.nil? %>
+      <%= link_to position.poster.name, position.poster %></br>
     <% end %>
   </td>
 </tr>

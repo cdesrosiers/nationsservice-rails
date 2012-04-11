@@ -17,11 +17,13 @@ Nationsservice::Application.routes.draw do
   
   match '/signout', to: 'sessions#destroy', via: :delete
   
-  match '/users/update_institutions_list', to: 'users#update_institutions_list'
+  match '/update_institutions_list', to: 'ajax#update_institutions_list'
   
-  match '/users/update_campuses_list', to: 'users#update_campuses_list'
+  match '/update_campuses_list', to: 'ajax#update_campuses_list'
   
   match '/calview', to: 'positions#index_calview'
+  
+  match '/newposition', to: 'positions#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

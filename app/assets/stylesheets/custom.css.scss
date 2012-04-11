@@ -272,3 +272,8 @@ input, textarea, select, .uneditable-input {
   font-size: 11px;
   text-align: center;
 }
+
+div.dropdown ul.dropdown-menu {
+    max-width: 5000px;
+}
+

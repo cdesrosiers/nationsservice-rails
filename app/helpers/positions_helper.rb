@@ -18,20 +18,11 @@ module PositionsHelper
     end
   end
   
-  def full_location_for(position)
-    has_city = !position.location_city.nil?
-    has_state = !position.location_state.nil?
-    has_country = !position.location_country.nil?
+  
+  def city_for(position)
+    has_city = !position.location_city.nil? && !position.location_city.blank?
+    has_state = !position.location_state.nil? && !position.location_state.blank?
     
-    delimiter = case
-    when (has_city ^ has_state) && has_country
-     ", "
-    when (has_city && has_state && has_country)
-      " - "
-    else
-      ""
-    end
-    
-    location = (has_city ? position.location_city : "") + (has_city && (has_state) ? ", " : "") + (has_state ? position.location_state : "") + delimiter + (has_country ? position.location_country : "")
+    location = (has_city ? position.location_city : "") + ((has_city && has_state) ? ", " : "") + (has_state ? position.location_state : "")
   end
 end

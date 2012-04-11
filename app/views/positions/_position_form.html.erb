@@ -1,0 +1,37 @@
+<%= form_for(@position) do |f| %>
+    
+    <%= render 'shared/positions_error_messages' %>
+    
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    
+    <%= f.label :location_city %>
+    <%= f.text_field :location_city %>
+    
+    <%= f.label :location_state %>
+    <%= f.text_field :location_state %>
+    
+    <%= f.label :location_country %>
+    <%= f.text_field :location_country %>
+    
+    <%= f.label :deadline %>
+    <%= f.text_field :deadline %>
+    
+    <%= f.label :position_type %>
+    <%= f.select :position_type, [['Fellowship', 1],['Internship', 2],['Job', 3],['Other', 0]], include_blank: true %>
+    
+    <div id="edit-institution">
+        <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
+      
+        <%= f.collection_select :institution_id, @institutions, :id, :name, { include_blank: true }, action: "/update_campuses_list", id: "institution_select"  %>
+    
+        <% if @campuses.any? %>
+            <%= collection_select :user, :campus_id, @campuses, :id, :name, include_blank: true, id: "campus_select" %>
+        <% end %>
+    </div>
+    
+    <%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
+<% end %>

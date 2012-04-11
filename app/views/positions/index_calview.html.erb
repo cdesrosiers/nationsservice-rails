@@ -8,12 +8,19 @@
   <%= calendar_for @positions, year: @date.year, month: @date.month do |calendar| %>
     <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
     <%= calendar.day(day_method: :try_deadline) do |date, positions| %>
-      <%= date.day %>
-      <ul>
-        <% for position in positions %>
-          <li><%= link_to position.name, position %></li>
-        <% end %>
-      </ul>
+      <%= date.day %></br>
+      <% if (positions.count > 0) %>
+      <div id="fat-menu" class="dropdown">
+        <a href='#' class="dropdown-toggle" data-toggle="dropdown">
+            <%= "#{pluralize(positions.count, 'deadline')}" %> <b class="caret"></b>
+        </a>
+          <ul class="dropdown-menu">
+            <% for position in positions %>
+              <li><%= link_to position.name, position %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 </div>

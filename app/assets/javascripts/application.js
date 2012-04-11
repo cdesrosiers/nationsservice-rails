@@ -36,5 +36,8 @@ $.fn.selectCampusesWithAjax = function() {
 
 $(document).ready(function() {
   $("#selected_institution_state").selectInstitutionsWithAjax();
-  $("#user_institution_id").selectCampusesWithAjax();
+  $("#institution_select").selectCampusesWithAjax();
+  $(".cal-list-container").popover();
+  
+  $("#position_deadline").datepicker({ dateFormat: "yy-mm-dd" });
 })

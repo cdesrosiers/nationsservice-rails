@@ -1,9 +1,9 @@
 <div id="edit-institution">
-    <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/users/update_institutions_list" %>
+    <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
       
-    <%= collection_select :user, :institution_id, @institutions, :id, :name, { include_blank: true }, action: "/users/update_campuses_list"  %>
+    <%= collection_select :user, :institution_id, @institutions, :id, :name, { include_blank: true }, { action: "/update_campuses_list" , id: "institution_select" } %>
     
     <% if @campuses.any? %>
-    <%= collection_select :user, :campus_id, @campuses, :id, :name, include_blank: true %>
+    <%= collection_select :user, :campus_id, @campuses, :id, :name, include_blank: true, id: "campus_select"%>
     <% end %>
 </div>

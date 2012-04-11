@@ -1,7 +1,14 @@
 <%= provide(:title, 'All Positions') %>
 <h1>All Positions</h1>
 
-<p><%= link_to "Calendar View", "/calview" %></p>
+<p>
+  <%= link_to "Calendar View", "/calview" %>
+  <% if signed_in? %>
+    | <%= link_to "Add new position", "/newposition" %>
+  <% else %>
+    
+  <% end %>
+</p>
 <%= will_paginate %>
 
 <table class="positions">
@@ -18,6 +25,15 @@
   </td>
   <td>
     Description
+  </td>
+  <td>
+    Duration
+  </td>
+  <td>
+    Institution Specific
+  </td>
+  <td>
+    Posted By
   </td>
   <%= render @positions %>
 </table>

@@ -11,10 +11,13 @@
         <% if !@position.deadline.nil? %>
           <%= @position.deadline.to_s(:long) %>
         <% end %></br>
-        Location: <%= @position.location_city %><% if !@position.location_state.nil? %>, <%= @position.location_state %><% end %><% if !@position.location_country.nil? %>, <%= @position.location_country %><% end %></br>
+        Location: <%= city_for @position %></br>
         Type: <%= position_type @position %></br>
         <% if !@position.description.nil? %>
           <%= @position.description %></br>
+        <% end %>
+        <% if signed_in? %>
+          <%= link_to "Edit Position", edit_position_path(@position) %>
         <% end %>
       </p>
     </section>

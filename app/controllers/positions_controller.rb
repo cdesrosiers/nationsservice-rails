@@ -31,6 +31,7 @@ class PositionsController < ApplicationController
   
   def new
     @position = Position.new
+    prefill_institution_field
   end
   
   def create

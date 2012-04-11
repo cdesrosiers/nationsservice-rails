@@ -1,4 +1,0 @@
-$('#user_campus_id').remove();
-<% if @campuses.any? %>
-$('#edit-institution').append('<%= escape_javascript(collection_select :user, :campus_id, @campuses, :id, :name, prompt: 'Select a Campus') %>');
-<% end %>

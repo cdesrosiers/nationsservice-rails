@@ -25,7 +25,7 @@ class PositionsController < ApplicationController
       flash[:success] = "Position updated"
       redirect_to @position
     else
-      prefill_institution_form
+      prefill_institution_field
       render 'edit'
     end
   end
@@ -41,6 +41,7 @@ class PositionsController < ApplicationController
       flash[:success] = "New position added"
       redirect_to @position
     else
+      prefill_institution_field
       render 'new'
     end
   end
@@ -65,7 +66,7 @@ class PositionsController < ApplicationController
         end
         @campuses = []
       else
-        @selected_institution = Institution.find_by_id(@user.institution_id)
+        @selected_institution = Institution.find_by_id(@position.institution_id)
         @institutions = Institution.where("state = ?", @selected_institution.state).order(:name)
         @campuses = @selected_institution.campuses.any? ? @selected_institution.campuses : []
       end

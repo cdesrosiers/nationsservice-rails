@@ -1,6 +1,6 @@
 module PositionsHelper
   def logo_for(position, options = { width: 200 })
-    image_tag("logos/#{position.logo_path}", alt: '', class: "round", width: options[:width])
+    image_tag("#{position.logo_path}", alt: '', class: "round", width: options[:width])
   end
   
   def position_type(position)

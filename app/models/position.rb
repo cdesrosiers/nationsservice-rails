@@ -1,5 +1,5 @@
 class Position < ActiveRecord::Base
-  attr_accessible :name, :description, :location_city, :location_state, :location_country, :deadline, :logo_path, :position_type, :institution_id
+  attr_accessible :name, :description, :location_city, :location_state, :location_country, :deadline, :logo_path, :position_type, :institution_id, :duration
   belongs_to :poster, class_name: 'User', foreign_key: :posted_by
   belongs_to :institution
   

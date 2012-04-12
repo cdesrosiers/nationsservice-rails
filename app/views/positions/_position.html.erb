@@ -10,7 +10,7 @@
   </td>
   <td>
     <% if !position.deadline.nil? %>
-      <%= position.deadline.to_s(:long) %>
+      <%= position.deadline.strftime('%m/%d/%y') %>
     <% end %>
   </td>
   <td>
@@ -20,7 +20,7 @@
   </td>
   <td>
     <% if !position.duration.nil? %>
-      <%= distance_of_time(61.weeks)  %></br>
+      <%= position_duration(position) %></br>
     <% end %>
   </td>
   <td>

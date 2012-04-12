@@ -1,29 +1,32 @@
+require 'nokogiri'
+
 namespace :db do
+  
   desc "Fill database with sample data"
-  task populate: :environment do
+  namespace :sample do
     
-    admin = User.create!(name: "Example User",
-                         email: "example@railstutorial.org",
-                         password: "foobar",
-                         password_confirmation: "foobar",
-                         institution_id: Institution.first.id)
-    admin.toggle!(:admin)
-    
-    99.times do |n|
-      name  = Faker::Name.name
-      email = "example-#{n+1}@railstutorial.org"
-      password  = "password"
-      
-      #associate the user to a random institution and campus if applicable
-      institution = Institution.first(offset: rand(Institution.count))
-      campus_id = institution.campuses.count > 0 ? institution.campuses.first(offset: rand(institution.campuses.count)).id : nil
-      
-      User.create!(name: name,
-                   email: email,
-                   password: password,
-                   password_confirmation: password,
-                   institution_id: institution.id,
-                   campus_id: campus_id)
+    desc "Fill database with sample users"
+    task users: :environment do
+      puts "Adding sample users to database..."
+      load "#{File.dirname(__FILE__)}/users.rb"
+      puts "done"
     end
+    
+    desc "Fill database with institutions"
+    task institutions: :environment do
+      puts "Adding institutions to database..."
+      load "#{File.dirname(__FILE__)}/institutions.rb"
+      puts "done"
+    end
+    
+    desc "Fill database with positions"
+    task positions: :environment do
+      puts "Adding sample positions to database..."
+      load "#{File.dirname(__FILE__)}/positions.rb"
+      puts "done"
+    end
+    
+    desc "Fill database with sample data"
+    task fill: [:institutions, :users, :positions]
   end
 end

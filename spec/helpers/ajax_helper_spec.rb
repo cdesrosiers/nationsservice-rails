@@ -9,7 +9,3 @@ require 'spec_helper'
 #       helper.concat_strings("this","that").should == "this that"
 #     end
 #   end
-# end
-describe AjaxHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

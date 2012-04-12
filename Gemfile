@@ -38,3 +38,4 @@ group :test do
 end
 
 gem "watu_table_builder", :require => "table_builder"
+gem 'paperclip', '3.0.2'

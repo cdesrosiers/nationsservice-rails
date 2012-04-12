@@ -18,6 +18,26 @@ module PositionsHelper
     end
   end
   
+  def position_duration(position)
+    case position.duration
+    when 0
+      'Other'
+    when 1
+      'Summer/Seasonal'
+    when 2
+      '6-month'
+    when 3
+      '9-month'
+    when 4
+      'Year-long'
+    when 5
+      '2-year'
+    when 6
+      '> 2-year'
+    else
+      ''
+    end
+  end
   
   def city_for(position)
     has_city = !position.location_city.nil? && !position.location_city.blank?

@@ -46,6 +46,12 @@ class PositionsController < ApplicationController
     end
   end
   
+  def destroy
+    Position.find(params[:id]).destroy
+    flash[:success] = "Position destroyed."
+    redirect_to positions_path
+  end  
+  
   private
   
     def signed_in_user

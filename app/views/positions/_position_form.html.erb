@@ -23,6 +23,9 @@
     <%= f.label :position_type %>
     <%= f.select :position_type, [['Fellowship', 1],['Internship', 2],['Job', 3],['Other', 0]], include_blank: true %>
     
+    <%= f.label :duration %>
+    <%= f.select :duration, [['Summer/Seasonal', 1],['6-month', 2],['9-month', 3],['Year-long', 4],['2-year', 5],['> 2-year', 6],['Other', 0]], include_blank: true %>
+    
     <div id="edit-institution">
         <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
       

@@ -27,4 +27,14 @@ class AjaxController < ApplicationController
       format.js
     end
   end
+  
+  def update_provinces_list
+    if(params[:country_code].present?)
+      begin
+        @provinces = Carmen.states(params[:country_code])
+      rescue
+        @provinces = []
+      end
+    end
+  end
 end

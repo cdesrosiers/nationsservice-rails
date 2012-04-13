@@ -34,10 +34,18 @@ $.fn.selectCampusesWithAjax = function() {
   });
 }
 
+$.fn.selectProvincesWithAjax = function() {
+  var that = this;
+
+  this.change(function() {
+    $.post(that.attr('action'), {country_code: that.val()}, null, "script");
+  });
+}
+
 $(document).ready(function() {
   $("#selected_institution_state").selectInstitutionsWithAjax();
   $("#institution_select").selectCampusesWithAjax();
-  $(".cal-list-container").popover();
+  $("#position_location_country").selectProvincesWithAjax();
   
   $("#position_deadline").datepicker({ dateFormat: "yy-mm-dd" });
 })

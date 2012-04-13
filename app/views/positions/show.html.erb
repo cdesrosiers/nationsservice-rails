@@ -8,9 +8,17 @@
       <p>
         Application deadline:
         <% if !@position.deadline.nil? %>
-          <%= @position.deadline.to_s(:long) %>
-        <% end %></br>
-        Location: <%= city_for @position %></br>
+          <%= @position.deadline.to_s(:long) %></br>
+        <% end %>
+        <% if !@city_name.blank? %>
+          City: <%= @city_name %></br>
+        <% end %>
+        <% if !@province_name.blank? %>
+          State/Province: <%= @province_name %></br>
+        <% end %>
+        <% if !@country_name.blank? %>
+          Country: <%= @country_name %></br>
+        <% end %>
         Type: <%= position_type @position %></br>
         <% if !@position.description.nil? %>
           <%= @position.description %></br>

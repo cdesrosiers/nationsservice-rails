@@ -3,6 +3,18 @@ module PositionsHelper
     image_tag("#{position.logo_path}", alt: '', class: "round", width: options[:width])
   end
   
+  def country_name_for(position)
+    position.location_country.nil? ? "" : Carmen.country_name(position.location_country)
+  end
+  
+  def province_name_for(position)
+    position.location_state.nil? ? "" : Carmen.state_name(position.location_state, position.location_country)
+  end
+  
+  def city_name_for(position)
+    position.location_city.nil? ? "" : position.location_city
+  end
+  
   def position_type(position)
     case position.position_type
     when 0

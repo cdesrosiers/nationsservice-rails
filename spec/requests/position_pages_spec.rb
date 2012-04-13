@@ -4,6 +4,46 @@ describe "Position pages" do
   
   subject { page }
   
+  describe "edit" do
+    
+    let(:position) { FactoryGirl.create(:position) }
+    let(:user) { FactoryGirl.create(:user) }
+    
+    
+    before do
+      sign_in user
+      visit edit_position_path(position)
+    end
+
+    describe "page" do
+      it { should have_selector('h1',    text: "Update this Position") }
+      it { should have_selector('title', text: "Edit Position") }
+    end
+
+    describe "with invalid information" do
+      before do
+        select '',          from: 'Position type'
+        click_button "Save changes"
+      end
+
+      it { should have_content('error') }
+    end
+    
+    describe "with valid information" do
+      let(:new_name)  { "New Position Name" }
+      before do
+        fill_in "Name",               with: new_name
+        select 'Fellowship',          from: 'Position type'
+        click_button "Save changes"
+      end
+
+      it { should have_selector('title', text: new_name) }
+      it { should have_selector('div.alert.alert-success') }
+      specify { position.reload.position_type == 1 }
+      specify { position.reload.name.should  == new_name }
+    end
+  end
+  
   describe "index" do
     
     let(:position) { FactoryGirl.create(:position) }

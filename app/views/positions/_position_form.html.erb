@@ -8,14 +8,17 @@
     <%= f.label :description %>
     <%= f.text_field :description %>
     
-    <%= f.label :location_city %>
-    <%= f.text_field :location_city %>
-    
-    <%= f.label :location_state %>
-    <%= f.text_field :location_state %>
-    
-    <%= f.label :location_country %>
-    <%= f.text_field :location_country %>
+    <div id="edit-location">
+        <%= f.label :location_country %>
+        <%= f.select :location_country, @countries, { include_blank: true }, action: "/update_provinces_list" %>
+        
+        <% if @provinces.any? %>
+            <%= f.select :location_state, @provinces, { prompt: "Select a State/Province" } %>
+        <% end %>
+    </div>
+        
+        <%= f.label :location_city %>
+        <%= f.text_field :location_city %>
     
     <%= f.label :deadline %>
     <%= f.text_field :deadline %>

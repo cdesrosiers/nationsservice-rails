@@ -1,0 +1,4 @@
+$('#position_location_state').remove();
+<% if @provinces.any? %>
+$('#edit-location').append('<%= escape_javascript(select :position, :location_state, @provinces, prompt: 'Select a State/Province', id: "position_location_state") %>');
+<% end %>

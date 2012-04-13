@@ -1,8 +1,13 @@
 class PositionsController < ApplicationController
+  include PositionsHelper
+  
   before_filter :signed_in_user, only: [:edit, :update, :new, :create]
   
   def show
     @position = Position.find(params[:id])
+    @city_name = city_name_for(@position)
+    @province_name = province_name_for(@position)
+    @country_name = country_name_for(@position)
   end
   
   def index
@@ -16,6 +21,7 @@ class PositionsController < ApplicationController
   
   def edit
     @position = Position.find_by_id(params[:id])
+    prefill_location_field
     prefill_institution_field
   end
   
@@ -25,6 +31,7 @@ class PositionsController < ApplicationController
       flash[:success] = "Position updated"
       redirect_to @position
     else
+      prefill_location_field
       prefill_institution_field
       render 'edit'
     end
@@ -32,6 +39,7 @@ class PositionsController < ApplicationController
   
   def new
     @position = Position.new
+    prefill_location_field
     prefill_institution_field
   end
   
@@ -41,6 +49,7 @@ class PositionsController < ApplicationController
       flash[:success] = "New position added"
       redirect_to @position
     else
+      prefill_location_field
       prefill_institution_field
       render 'new'
     end
@@ -50,7 +59,7 @@ class PositionsController < ApplicationController
     Position.find(params[:id]).destroy
     flash[:success] = "Position destroyed."
     redirect_to positions_path
-  end  
+  end
   
   private
   
@@ -58,6 +67,16 @@ class PositionsController < ApplicationController
       unless signed_in?
         store_location
         redirect_to signin_path, notice: "Please sign in."
+      end
+    end
+    
+    def prefill_location_field
+      @countries = Carmen.countries
+      
+      begin
+        @provinces = Carmen.states(@position.location_country)
+      rescue
+        @provinces = []
       end
     end
     

@@ -21,6 +21,8 @@ Nationsservice::Application.routes.draw do
   
   match '/update_campuses_list', to: 'ajax#update_campuses_list'
   
+  match '/update_provinces_list', to: 'ajax#update_provinces_list'
+  
   match '/calview', to: 'positions#index_calview'
   
   match '/newposition', to: 'positions#new'

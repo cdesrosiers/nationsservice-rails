@@ -9,6 +9,8 @@
     
   <% end %>
 </p>
+
+<% if @positions.any? %>
 <%= will_paginate %>
 
 <table class="positions">
@@ -39,3 +41,4 @@
 </table>
 
 <%= will_paginate %>
+<% end %>

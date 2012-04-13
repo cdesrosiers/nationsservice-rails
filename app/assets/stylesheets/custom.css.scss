@@ -151,7 +151,6 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  padding: 10px;
   height: auto;
   margin-bottom: 15px;
   @include box_sizing;
@@ -201,13 +200,6 @@ input, textarea, select, .uneditable-input {
         border-right: 1px solid $grayLighter;
     }
   }
-}
-
-#edit-institution {
-    background-color: #F5F5F5;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px 4px 4px 4px;
-    display: block;
 }
 
 #calendar table {
@@ -294,4 +286,15 @@ div.dropdown ul.dropdown-menu {
     &:hover {
         color: #C0CECD;
     }
+}
+
+#position-edit {
+    background-color: #F5F5F5;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px 4px 4px 4px;
+    display: block;
+}
+
+#edit-form {
+    padding: 40px;
 }

@@ -36,5 +36,7 @@ class AjaxController < ApplicationController
         @provinces = []
       end
     end
+    
+    @elem_id = params[:elem_id].present? ? params[:elem_id] : ""
   end
 end

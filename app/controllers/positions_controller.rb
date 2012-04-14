@@ -27,6 +27,7 @@ class PositionsController < ApplicationController
   
   def update
     @position = Position.find_by_id(params[:id])
+    place_in_locales
     if @position.update_attributes(params[:position])
       flash[:success] = "Position updated"
       redirect_to @position
@@ -73,11 +74,7 @@ class PositionsController < ApplicationController
     def prefill_location_field
       @countries = Carmen.countries
       
-      begin
-        @provinces = Carmen.states(@position.location_country)
-      rescue
-        @provinces = []
-      end
+      @provinces = []
     end
     
     def prefill_institution_field
@@ -97,5 +94,24 @@ class PositionsController < ApplicationController
       end
     
       @states = Institution.select(:state).uniq.reorder(:state)
+    end
+    
+    def place_in_locales
+      if params[:locales].present?
+        locale_recs = []
+        for locale in params[:locales] do
+          locale_rec = Locale.find(:first, conditions: locale)
+          
+          if locale_rec.nil?
+            locale_rec = Locale.create(locale)
+          end
+          
+          locale_recs.append(locale_rec) unless locale_rec.nil?
+        end
+        
+        for locale_id in locale_recs do
+          @position.place_in(locale_rec) unless @position.placed_in?(locale_rec)
+        end
+      end
     end
 end

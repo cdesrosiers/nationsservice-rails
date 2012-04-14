@@ -1,4 +1,4 @@
-$('#campus_select').remove();
 <% if @campuses.any? %>
-$('#edit-institution').append('<%= escape_javascript(collection_select :user, :campus_id, @campuses, :id, :name, prompt: 'Select a Campus', id: "campus_select") %>');
+$('#campus_select').html('<option>Select an Institution</option><%= escape_javascript(options_for_select(@campuses.map {|cam| [cam.name, cam.id]})) %>');
+$('#campus_select').removeAttr('disabled');
 <% end %>

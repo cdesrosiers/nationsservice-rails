@@ -1,14 +1,14 @@
 <% provide(:title, @position.name) %>
 <div class="row">
-  <div class="span16">
-    <section>
-      <h1><%= @position.name %></br>
+  <div class="span12">
+      <h2><%= @position.name %></br>
       <%= logo_for @position %>
-      </h1>
+      </h2>
       <p>
         Application deadline:
         <% if !@position.deadline.nil? %>
-          <%= @position.deadline.to_s(:long) %></br>
+          <%= @position.deadline.to_s(:long) %>
+          </br>
         <% end %>
         <% if !@city_name.blank? %>
           City: <%= @city_name %></br>
@@ -27,6 +27,5 @@
           <%= link_to "Edit Position", edit_position_path(@position) %>
         <% end %>
       </p>
-    </section>
   </div>
 </div>

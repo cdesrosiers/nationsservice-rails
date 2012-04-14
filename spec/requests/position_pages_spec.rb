@@ -71,7 +71,7 @@ describe "Position pages" do
     let(:position) { FactoryGirl.create(:position) }
     before { visit position_path(position) }
     
-    it { should have_selector('h1',    text: position.name) }
+    it { should have_selector('h2',    text: position.name) }
     it { should have_selector('title', text: position.name) }
   end
 end

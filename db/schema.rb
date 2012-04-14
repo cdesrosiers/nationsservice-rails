@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412134215) do
+ActiveRecord::Schema.define(:version => 20120413151751) do
 
   create_table "campus", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,29 @@ ActiveRecord::Schema.define(:version => 20120412134215) do
   end
 
   add_index "institutions", ["state"], :name => "index_institutions_on_state"
+
+  create_table "locales", :force => true do |t|
+    t.string   "country"
+    t.string   "province"
+    t.string   "city"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "locales", ["city"], :name => "index_locales_on_city"
+  add_index "locales", ["country"], :name => "index_locales_on_country"
+  add_index "locales", ["province"], :name => "index_locales_on_province"
+
+  create_table "placements", :force => true do |t|
+    t.integer  "position_id"
+    t.integer  "locale_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "placements", ["locale_id"], :name => "index_placements_on_locale_id"
+  add_index "placements", ["position_id", "locale_id"], :name => "index_placements_on_position_id_and_locale_id", :unique => true
+  add_index "placements", ["position_id"], :name => "index_placements_on_position_id"
 
   create_table "positions", :force => true do |t|
     t.string   "name"

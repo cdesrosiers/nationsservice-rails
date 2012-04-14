@@ -52,7 +52,6 @@ h2 {
   font-size: 1.7em;
   letter-spacing: -1px;
   margin-bottom: 30px;
-  text-align: center;
   font-weight: normal;
   color: $lightgray;
 }
@@ -270,7 +269,7 @@ div.dropdown ul.dropdown-menu {
 }
 
 .navbar-inner {
-    height: 60px;
+    height: 40px;
     background: rgb(208,228,247); /* Old browsers */
     background: -moz-linear-gradient(-45deg,  rgba(208,228,247,1) 0%, rgba(115,177,231,1) 24%, rgba(10,119,213,1) 50%, rgba(83,159,225,1) 79%, rgba(135,188,234,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(208,228,247,1)), color-stop(24%,rgba(115,177,231,1)), color-stop(50%,rgba(10,119,213,1)), color-stop(79%,rgba(83,159,225,1)), color-stop(100%,rgba(135,188,234,1))); /* Chrome,Safari4+ */
@@ -298,3 +297,13 @@ div.dropdown ul.dropdown-menu {
 #edit-form {
     padding: 40px;
 }
+
+.country-dd {
+    margin-right: 25px;
+}
+
+.city-tf {
+    margin-right: 25px;
+}
+
+

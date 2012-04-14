@@ -1,4 +1,6 @@
-$('#position_location_state').remove();
 <% if @provinces.any? %>
-$('#edit-location').append('<%= escape_javascript(select :position, :location_state, @provinces, prompt: 'Select a State/Province', id: "position_location_state") %>');
+$('#<%= @elem_id %> > .province-dd').replaceWith('<%= escape_javascript(select_tag "locales[][province]", options_for_select(@provinces), { prompt: "Select a State/Province", class: "span3 province-dd"}) %>');
+<% else %>
+$('#<%= @elem_id %> > .province-dd').replaceWith('<%= escape_javascript(select_tag "locales[][province]", options_for_select([]), { prompt: "Select a State/Province", class: "span3 province-dd"}) %>');
+$('#<%= @elem_id %> > .province-dd').attr('disabled', 'true');
 <% end %>

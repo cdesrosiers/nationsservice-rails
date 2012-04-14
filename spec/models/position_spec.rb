@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Position do
   
-  before { @position = Position.new }
+  before { @position = FactoryGirl.create(:position) }
   
   subject { @position }
   
@@ -14,5 +14,28 @@ describe Position do
   it { should respond_to(:deadline) }
   it { should respond_to(:logo_path) }
   it { should respond_to(:position_type) }
+  it { should respond_to(:locales) }
+  it { should respond_to(:placements) }
+  
+  it { should respond_to(:place_in!) }
+  it { should respond_to(:placed_in?) }
+  it { should respond_to(:remove_from!) }
+  
+  describe "placement" do
+    let(:locale) { FactoryGirl.create(:locale) }    
+    before do
+      @position.place_in!(locale)
+    end
+
+    it { should be_placed_in(locale) }
+    its(:locales) { should include(locale) }
+    
+    describe "and removal" do
+      before { @position.remove_from!(locale) }
+
+      it { should_not be_placed_in(locale) }
+      its(:locales) { should_not include(locale) }
+    end
+  end
   
 end

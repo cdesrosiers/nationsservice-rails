@@ -20,12 +20,18 @@ FactoryGirl.define do
     institution
   end
   
+  factory :locale do
+    country "US"
+    province "CA"
+    sequence(:city) { |n| "California City #{n}" }
+  end
+  
   factory :position do
     sequence(:name) { |n| "Fellowhip #{n}" }
     sequence(:description) { |n| "This is the description of fellowship number #{n}"}
-    sequence(:location_city) { |n| "City #{n}" }
-    sequence(:location_state) { |n| "State #{n}" }
-    sequence(:location_country) { |n| "Country #{n}" }
+    sequence(:location_city) { |n| "Lincoln" }
+    sequence(:location_state) { |n| "NE" }
+    sequence(:location_country) { |n| "US" }
     sequence(:deadline) { Time.now.strftime("%Y-%m-%d") }
     sequence(:logo_path) { |n| "pic{n}.jpg"}
     sequence(:position_type) { 0 }

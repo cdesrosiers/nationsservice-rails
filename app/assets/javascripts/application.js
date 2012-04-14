@@ -36,16 +36,15 @@ $.fn.selectCampusesWithAjax = function() {
 
 $.fn.selectProvincesWithAjax = function() {
   var that = this;
-
+  
   this.change(function() {
-    $.post(that.attr('action'), {country_code: that.val()}, null, "script");
+    $.post(that.attr('action'), {country_code: that.val(), elem_id: that.parent().attr('id')}, null, "script");
   });
 }
 
 $(document).ready(function() {
   $("#selected_institution_state").selectInstitutionsWithAjax();
   $("#institution_select").selectCampusesWithAjax();
-  $("#position_location_country").selectProvincesWithAjax();
   
-  $("#position_deadline").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#deadline-select").datepicker({ dateFormat: "yy-mm-dd" });
 })

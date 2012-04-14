@@ -2,41 +2,72 @@
     
     <%= render 'shared/positions_error_messages' %>
     
+    <%= javascript_tag do %>
+        function newLocaleForm() {
+            
+            if (typeof newLocaleForm.callcount == 'undefined') {
+                newLocaleForm.callcount = 1;
+            } else {
+                ++newLocaleForm.callcount;
+            }
+            
+            var id = 'locale-' + newLocaleForm.callcount;
+            var cssid = '#' + id;
+            
+            $('#locale-list-container').append("<div class=\"new-locale span7\" id=\"" + id + "\"></div>");
+            $(cssid).append('<%= escape_javascript(select_tag "locales[][country]", options_for_select(@countries), prompt: "Choose a Country", action: "/update_provinces_list", class: "span2 country-dd" ) %>');
+            $(cssid + ' > .country-dd').selectProvincesWithAjax();
+            $(cssid).append('<%= escape_javascript(text_field_tag "locales[][city]", nil, placeholder: "City", class: "span2 city-tf")%>');
+            $(cssid + ' > .city-tf').after('<%= escape_javascript(select_tag "locales[][province]", options_for_select([]), { disabled: true, prompt: "Select a State/Province", class: "span3 province-dd"}) %>');
+            }
+    <% end %>
+    
     <%= f.label :name %>
     <%= f.text_field :name %>
     
     <%= f.label :description %>
     <%= f.text_field :description %>
     
-    <div id="edit-location">
-        <%= f.label :location_country %>
-        <%= f.select :location_country, @countries, { include_blank: true }, action: "/update_provinces_list" %>
-        
-        <% if @provinces.any? %>
-            <%= f.select :location_state, @provinces, { prompt: "Select a State/Province" } %>
-        <% end %>
+    <div id="locale-list-container" class="row">
     </div>
-        
-        <%= f.label :location_city %>
-        <%= f.text_field :location_city %>
     
-    <%= f.label :deadline %>
-    <%= f.text_field :deadline %>
+    <%= button_to_function "Add locale...", "newLocaleForm()", id: "add-locale-button", :class => "btn" %>
     
-    <%= f.label :position_type %>
-    <%= f.select :position_type, [['Fellowship', 1],['Internship', 2],['Job', 3],['Other', 0]], include_blank: true %>
+    <div class="row">
+        <div class="span2">
+            <%= f.label :deadline %>
+            <%= f.text_field :deadline, id: "deadline-select" %>
+        </div>
+        <div class="span3">
+            <%= f.label :position_type %>
+            <%= f.select :position_type, [['Fellowship', 1],['Internship', 2],['Job', 3],['Other', 0]], { include_blank: true }, id: "type-select" %>
+        </div>
+        <div class="span2">
+            <%= f.label :duration %>
+            <%= f.select :duration, [['Summer/Seasonal', 1],['6-month', 2],['9-month', 3],['Year-long', 4],['2-year', 5],['> 2-year', 6],['Other', 0]], { include_blank: true }, id: "duration-select" %>
+        </div>
+    </div>
     
-    <%= f.label :duration %>
-    <%= f.select :duration, [['Summer/Seasonal', 1],['6-month', 2],['9-month', 3],['Year-long', 4],['2-year', 5],['> 2-year', 6],['Other', 0]], include_blank: true %>
+    <%= f.label :selected_institution, "Institution" %>
     
-    <div id="edit-institution">
-        <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
-      
-        <%= f.collection_select :institution_id, @institutions, :id, :name, { include_blank: true }, action: "/update_campuses_list", id: "institution_select"  %>
-    
-        <% if @campuses.any? %>
-            <%= collection_select :user, :campus_id, @campuses, :id, :name, include_blank: true, id: "campus_select" %>
-        <% end %>
+    <div id="edit-institution" class="row">
+        <div class="span2">
+            <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
+        </div>
+        <div class="span3">
+            <% if @institutions.any? %>
+                <%= f.collection_select :institution_id, @institutions, :id, :name, { prompt: "Select an Institution" }, action: "/update_campuses_list", id: "institution_select"  %>
+            <% else %>
+                <%= f.collection_select :institution_id, [], :id, :name, { prompt: "Select an Institution" }, { action: "/update_campuses_list", id: "institution_select", disabled: true } %>
+            <% end %>
+        </div>
+        <div class="span2">
+            <% if @campuses.any? %>
+                <%= f.collection_select :campus_id, @campuses, :id, :name, { prompt: "Select a Campus" }, { id: "campus_select" } %>
+            <% else %>
+                <%= f.collection_select :campus_id, [], :id, :name, { prompt: "Select a Campus" }, { id: "campus_select", disabled: true } %>
+            <% end %>
+        </div>
     </div>
     
     <%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>

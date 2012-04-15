@@ -1,6 +1,6 @@
 module PositionsHelper
   def logo_for(position, options = { width: 200 })
-    image_tag("#{position.logo_path}", alt: '', class: "round", width: options[:width])
+    image_tag("#{position.logo_path}", alt: '', class: "round", width: options[:width]) unless (position.logo_path.nil? or position.logo_path.blank?)
   end
   
   def country_name_for(position)

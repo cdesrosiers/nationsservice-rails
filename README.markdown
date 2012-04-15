@@ -3,7 +3,7 @@
 This site is being developed so that it can be used as a free, collaborative resource for university
 students and alumni to explore a wide variety of career paths together, and to discuss alternatives
 to the seemingly limited options students see as they approach graduation.
-If you have some ideas to share and want to help add to the site, visit at nationsservice.org.
+If you have some ideas to share and want to help add to the site, visit our [*current site*](http://nationsservice.org).
 There we have developed a rough version of the site on the Wikidot engine to get the project of the ground quickly.
 But now, as we are expanding and looking to add new features to enhance user experience, we have decided to build a
 new version with rails. If you'd like to become a maintain, please let me know.

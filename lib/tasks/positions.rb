@@ -15,7 +15,7 @@ def random_locale
 end
 
 def rand_small_int
-                rand(1..5)
+                (1..5).to_a.sample
 end
 
 positions = [

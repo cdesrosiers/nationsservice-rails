@@ -109,7 +109,7 @@ class PositionsController < ApplicationController
           locale_recs.append(locale_rec) unless locale_rec.nil?
         end
         
-        for locale_id in locale_recs do
+        for locale_rec in locale_recs do
           @position.place_in(locale_rec) unless @position.placed_in?(locale_rec)
         end
       end

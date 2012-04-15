@@ -10,11 +10,14 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :institution_id, :campus_id
+  attr_accessible :name, :email, :password, :password_confirmation, :institution_id, :campus_id, :gradyear
   has_secure_password
   before_save :create_remember_token
   belongs_to :institution
   has_many :posted_positions, class_name: 'Position', foreign_key: :posted_by
+  
+  GRADYEAR_UPPER = 2016
+  GRADYEAR_LOWER = 1950
   
   validates :name, presence: true, length: {maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -23,6 +26,11 @@ class User < ActiveRecord::Base
                     uniqueness: {case_sensitive: false}
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+  validate :gradyear_valid
+  
+  def gradyear_valid
+    errors.add(:gradyear, "Please select a valid graduation year") if (!gradyear.nil? and (gradyear < GRADYEAR_LOWER or gradyear > GRADYEAR_UPPER))
+  end
   
   private
     

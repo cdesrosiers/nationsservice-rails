@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414224224) do
+ActiveRecord::Schema.define(:version => 20120415153844) do
 
   create_table "campus", :force => true do |t|
     t.string   "name"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20120414224224) do
     t.boolean  "admin",           :default => false
     t.integer  "institution_id"
     t.integer  "campus_id"
+    t.integer  "gradyear"
   end
 
   add_index "users", ["campus_id"], :name => "index_users_on_campus_id"

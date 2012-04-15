@@ -26,7 +26,14 @@ namespace :db do
       puts "done"
     end
     
+    desc "Fill database with locales"
+    task locales: :environment do
+      puts "Adding locales to database..."
+      load "#{File.dirname(__FILE__)}/locales.rb"
+      puts "done"
+    end
+    
     desc "Fill database with sample data"
-    task fill: [:institutions, :users, :positions]
+    task fill: [:institutions, :users, :locales, :positions]
   end
 end

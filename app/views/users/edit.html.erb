@@ -18,24 +18,27 @@
     <%= f.password_field :password_confirmation %>
     
     <div id="edit-institution" class="row">
-    <div class="span2">
-        <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
+      <div class="span2">
+          <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
+      </div>
+      <div class="span4">
+          <% if @institutions.any? %>
+              <%= f.collection_select :institution_id, @institutions, :id, :name, { prompt: "Select an Institution" }, action: "/update_campuses_list", id: "institution_select"  %>
+          <% else %>
+              <%= f.collection_select :institution_id, [], :id, :name, { prompt: "Select an Institution" }, { action: "/update_campuses_list", id: "institution_select", disabled: true } %>
+          <% end %>
+      </div>
+      <div class="span3">
+          <% if @campuses.any? %>
+              <%= f.collection_select :campus_id, @campuses, :id, :name, { prompt: "Select a Campus" }, { id: "campus_select" } %>
+          <% else %>
+              <%= f.collection_select :campus_id, [], :id, :name, { prompt: "Select a Campus" }, { id: "campus_select", disabled: true } %>
+          <% end %>
+      </div>
+      <div class="span2">
+        <%= f.select :gradyear, User::GRADYEAR_LOWER..User::GRADYEAR_UPPER, { prompt: "Graduation Year" } %>
+      </div>
     </div>
-    <div class="span2">
-        <% if @institutions.any? %>
-            <%= f.collection_select :institution_id, @institutions, :id, :name, { prompt: "Select an Institution" }, action: "/update_campuses_list", id: "institution_select"  %>
-        <% else %>
-            <%= f.collection_select :institution_id, [], :id, :name, { prompt: "Select an Institution" }, { action: "/update_campuses_list", id: "institution_select", disabled: true } %>
-        <% end %>
-    </div>
-    <div class="span2">
-        <% if @campuses.any? %>
-            <%= f.collection_select :campus_id, @campuses, :id, :name, { prompt: "Select a Campus" }, { id: "campus_select" } %>
-        <% else %>
-            <%= f.collection_select :campus_id, [], :id, :name, { prompt: "Select a Campus" }, { id: "campus_select", disabled: true } %>
-        <% end %>
-    </div>
-</div>
 
     <%= submit_tag "Save changes", :class => "btn btn-large btn-primary" %>
       

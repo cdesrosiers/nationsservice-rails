@@ -21,7 +21,7 @@
     <hr>
       
     <h3>Latest Programs</h3>
-    <ul>
+    <ul class="margin-top">
       <% for posting in @latest_postings do %>
         <li><%= link_to posting.name, posting %></li>
       <% end %>
@@ -30,14 +30,20 @@
     <hr>
     
     <h3>Prologue TV - Internships</h3>
-    <iframe src="http://player.vimeo.com/video/36258703?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    <iframe src="http://player.vimeo.com/video/36258703?title=0&amp;byline=0&amp;portrait=0" class="margin-top" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> 
   </div>
 
   <div class="span6 intro-column">
     <h3>Featured Alumni Profiles</h3>
-    <ul>
+    <ul class="margin-top">
       <% for user in @featured_users do %>
-        <li><%= link_to user.name, user %> <span class="float-right"><%= Institution.find_by_id(user.institution_id).name %></span></li>
+        <li>
+          <%= link_to user.name, user %>
+          <span class="float-right">
+            <%= Institution.find_by_id(user.institution_id).name %>
+            <%= gradyear_short(user.gradyear) %>
+          </span>
+        </li>
       <% end %>
     </ul>
     

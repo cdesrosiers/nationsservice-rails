@@ -11,12 +11,12 @@ new version with rails. If you'd like to become a maintainer, please let me know
 ## Data Model Description
 
 There are currently six models:
-*User - users of the site
-*Position - a fellowship, internship, job or other
-*Locale - geographic location associated with a set of positions
-*Institution - college or university in the US
-*Campus - a campus that is a subset of some institution
-*Placement - the placement of a position in a locale
+* User - users of the site
+* Position - a fellowship, internship, job or other
+* Locale - geographic location associated with a set of positions
+* Institution - college or university in the US
+* Campus - a campus that is a subset of some institution
+* Placement - the placement of a position in a locale
 
 ## Data Sources
 

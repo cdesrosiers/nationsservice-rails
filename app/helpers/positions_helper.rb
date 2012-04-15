@@ -4,15 +4,15 @@ module PositionsHelper
   end
   
   def country_name_for(position)
-    position.location_country.nil? ? "" : Carmen.country_name(position.location_country)
+    ""
   end
   
   def province_name_for(position)
-    position.location_state.nil? ? "" : Carmen.state_name(position.location_state, position.location_country)
+    ""
   end
   
   def city_name_for(position)
-    position.location_city.nil? ? "" : position.location_city
+    ""
   end
   
   def position_type(position)
@@ -52,9 +52,28 @@ module PositionsHelper
   end
   
   def city_for(position)
-    has_city = !position.location_city.nil? && !position.location_city.blank?
-    has_state = !position.location_state.nil? && !position.location_state.blank?
+    ""    
+  end
+  
+  def locale_name_short(locale)
+    ret = ""
     
-    location = (has_city ? position.location_city : "") + ((has_city && has_state) ? ", " : "") + (has_state ? position.location_state : "")
+    ret << locale.city unless locale.city.nil?
+    
+    if locale.country == 'US'
+      if (!locale.city.nil? and !locale.city.blank?)
+        ret << ", #{locale.province}" unless locale.city.nil?
+      else
+        ret << "#{Carmen.state_name(locale.province)}" unless locale.city.nil?
+      end
+    else
+      if (!locale.city.nil? and !locale.city.blank?)
+        ret << ", #{Carmen.country_name(locale.country)}"
+      else
+        ret << "#{Carmen.state_name(locale.province, locale.country)}, " unless locale.province.nil?
+        ret << "#{Carmen.country_name(locale.country)}"
+      end
+    end
+    ret
   end
 end

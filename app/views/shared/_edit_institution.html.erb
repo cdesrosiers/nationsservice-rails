@@ -1,27 +1,8 @@
-<% provide(:title, "Edit user") %> 
-<h1>Update your profile</h1>
-
-<div class="row">
-  <div class="span6 offset3">
-  <%= form_for(@user, method: :put) do |f| %>
-    <%= render 'shared/error_messages' %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-
-    <%= f.label :password_confirmation, "Confirm Password" %>
-    <%= f.password_field :password_confirmation %>
-    
-    <div id="edit-institution" class="row">
+<div id="edit-institution" class="row">
     <div class="span2">
         <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
     </div>
-    <div class="span2">
+    <div class="span3">
         <% if @institutions.any? %>
             <%= f.collection_select :institution_id, @institutions, :id, :name, { prompt: "Select an Institution" }, action: "/update_campuses_list", id: "institution_select"  %>
         <% else %>
@@ -35,13 +16,4 @@
             <%= f.collection_select :campus_id, [], :id, :name, { prompt: "Select a Campus" }, { id: "campus_select", disabled: true } %>
         <% end %>
     </div>
-</div>
-
-    <%= submit_tag "Save changes", :class => "btn btn-large btn-primary" %>
-      
-    <% end %>
-
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
-  </div>
 </div>

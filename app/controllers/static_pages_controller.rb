@@ -9,5 +9,7 @@ class StaticPagesController < ApplicationController
   end
   
   def home
+    @latest_postings = Position.find(:all, limit: 6, order: :created_at)
+    @featured_users = User.find(:all, limit: 5)
   end
 end

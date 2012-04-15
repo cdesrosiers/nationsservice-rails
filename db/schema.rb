@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413151751) do
+ActiveRecord::Schema.define(:version => 20120414224224) do
 
   create_table "campus", :force => true do |t|
     t.string   "name"
@@ -57,18 +57,15 @@ ActiveRecord::Schema.define(:version => 20120413151751) do
   create_table "positions", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "location_city"
-    t.string   "location_state"
-    t.string   "location_country"
     t.date     "deadline"
     t.string   "logo_path"
     t.integer  "position_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "posted_by"
     t.integer  "institution_id"
     t.integer  "campus_id"
-    t.integer  "duration",         :limit => 2
+    t.integer  "duration",       :limit => 2
   end
 
   add_index "positions", ["institution_id"], :name => "index_positions_on_institution_id"

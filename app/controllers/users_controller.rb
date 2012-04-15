@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    prefill_institution_form
   end
   
   def create

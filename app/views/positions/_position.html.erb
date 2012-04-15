@@ -6,7 +6,11 @@
     <%= link_to position.name, position %>
   </td>
   <td>
-    <%= city_for position %>
+    <ul class="locale-list">
+      <% for locale in position.locales %>
+        <li><%= locale_name_short(locale) %></li>
+      <% end %>
+    </ul>
   </td>
   <td>
     <% if !position.deadline.nil? %>

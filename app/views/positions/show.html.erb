@@ -10,9 +10,6 @@
           <%= @position.deadline.to_s(:long) %>
           </br>
         <% end %>
-        <% if !@city_name.blank? %>
-          City: <%= @city_name %></br>
-        <% end %>
         <% if !@province_name.blank? %>
           State/Province: <%= @province_name %></br>
         <% end %>
@@ -26,6 +23,11 @@
         <% if signed_in? %>
           <%= link_to "Edit Position", edit_position_path(@position) %>
         <% end %>
+        <ul class="locale-list">
+          <% for locale in @position.locales %>
+            <li><%= locale_name_short(locale) %></li>
+          <% end %>
+        </ul>
       </p>
   </div>
 </div>

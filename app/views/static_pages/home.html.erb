@@ -1,12 +1,70 @@
 <% provide(:title, 'Welcome') %>
-<div class="center hero-unit">
-  <p>Hello! Welcome to Nations' Service, a resource for students and alumni looking for a way to do well by doing good.</p>
+<div class="row">
+  <div class="center span12" id="intro">
+    <p>Hello! Welcome to Nations' Service, a resource for students and alumni looking for a way to do well by doing good.</p>
+    <p>
+      This site is being developed so that it can be used as a free, collaborative resource for university students and alumni to explore a wide variety of career paths together, and to discuss alternatives to the seemingly limited options students see as they approach graduation.
+      If you have some ideas to share and want to help add to the site, join now and start contributing.
+    </p>
+  
+    <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  </div>
+</div>
+<div class="row margin-top">
+  <div class="span6">
+    <div class="center">
+      <a href="http://rework.jobs/">
+        <%= image_tag 'rework-logo.jpg', width: 300, alt: "Rework"%></br>
+      </a>
+    </div>
+    As an official partner of Nations' Service, ReWork helps talented professionals find meaningful work by matching applicants to job opportunities based not only on skills, but on values and culture.
+    <hr>
+      
+    <h3>Latest Programs</h3>
+    <ul>
+      <% for posting in @latest_postings do %>
+        <li><%= link_to posting.name, posting %></li>
+      <% end %>
+    </ul>
+    
+    <hr>
+    
+    <h3>Prologue TV - Internships</h3>
+    <iframe src="http://player.vimeo.com/video/36258703?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  </div>
 
-  <p>
-    This site is being developed so that it can be used as a free, collaborative resource for university students and alumni to explore a wide variety of career paths together, and to discuss alternatives to the seemingly limited options students see as they approach graduation.
-
-If you have some ideas to share and want to help add to the site, join now and start contributing.
-  </p>
-
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  <div class="span6 intro-column">
+    <h3>Featured Alumni Profiles</h3>
+    <ul>
+      <% for user in @featured_users do %>
+        <li><%= link_to user.name, user %> <span class="float-right"><%= Institution.find_by_id(user.institution_id).name %></span></li>
+      <% end %>
+    </ul>
+    
+    <hr>
+    <h3>Featured</h3>
+    <ul>
+      <li class="margin-top">
+        <a href="http://www.nyfa.org/opportunities.asp?type=Job&id=94&fid=1&sid=54">
+          New York Foundation for the Arts - Job Listings
+        </a>
+        - source for jobs and internships in the arts, culture and museum industries nationwide
+      </li>
+      <li class="margin-top">
+        <a href="http://www.nextbillion.net/jobs">
+        Next Billion - Career Center
+        </a>- connects business leaders, social entrepreneurs, NGOs, policy makers, and academics at the intersection of development and enterprise
+      </li>
+      <li class="margin-top">
+        <a href="http://www.ypfp.org/jobboard">
+        Young Professionals in Foreign Policy - Job Board
+        </a>- postings of US and international jobs in foreign policy
+      </li>
+      <li class="margin-top">
+        <a href="http://ynpnnyc.org/">
+        The Young Non-Profit Professionals Network (YNPN) - NYC Chapter
+        </a>- list-serv featuring non-profit and social enterprise jobs, volunteer opportunities, and social events throughout New York City.
+      </li>
+    </ul>
+  </div>
 </div>

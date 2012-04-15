@@ -41,7 +41,7 @@ def create_new_position(position_hash)
                 num_locales = rand_small_int
                 
                 num_locales.times do |n|
-                                new_position.place_in!(random_locale)
+                                new_position.place_in!(random_locale) unless new_position.placed_in?(random_locale)
                 end
 end
 

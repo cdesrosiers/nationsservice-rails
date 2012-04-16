@@ -46,8 +46,8 @@ class PositionsController < ApplicationController
   
   def create
     @position = @current_user.posted_positions.build(params[:position])
-    place_in_locales
     if @position.save
+      place_in_locales
       flash[:success] = "New position added"
       redirect_to @position
     else

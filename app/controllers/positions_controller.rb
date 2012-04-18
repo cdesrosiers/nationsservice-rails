@@ -1,4 +1,5 @@
 class PositionsController < ApplicationController
+  helper_attr :sort_column, :sort_direction
   include PositionsHelper
   
   before_filter :signed_in_user, only: [:edit, :update, :new, :create]
@@ -8,7 +9,8 @@ class PositionsController < ApplicationController
   end
   
   def index
-    @positions = Position.paginate(page: params[:page])
+    # FIX SQL INJECTION HOLE HERE
+    @positions = Position.search(params[:search]).order(sort_column + " " + sort_direction).paginate(page: params[:page])
   end
   
   def index_calview
@@ -111,5 +113,13 @@ class PositionsController < ApplicationController
           @position.place_in(locale_rec) unless @position.placed_in?(locale_rec)
         end
       end
+    end
+    
+    def sort_column
+      Position.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

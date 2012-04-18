@@ -1,42 +1,46 @@
 <%= provide(:title, 'All Positions') %>
 <h1>All Positions</h1>
 
-<p>
-  <%= link_to "Calendar View", "/calview" %>
-  <% if signed_in? %>
-    | <%= link_to "Add new position", "/newposition" %>
-  <% else %>
-    
-  <% end %>
-</p>
+<div class="row">
+  <div class="span3">
+      <%= form_tag positions_path, :method => 'get', class: "search" do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <div class="row">
+          <div class="span2">
+            <%= text_field_tag :search, params[:search] %>
+          </div>
+          <div class="span1">
+            <%= submit_tag "Search", :name => nil %>
+          </div>
+        </div>
+        <% end %>
+    </div>
+  <div class="offset7 span2">
+    <ul>
+    <li><%= link_to "Calendar View", "/calview", class: "float-right" %></li>
+    <% if signed_in? %>
+      <li><%= link_to "Add new position", "/newposition", class: "float-right"  %></li>
+    <% end %>
+    </ul>
+  </div>
+</div>
 
 <% if @positions.any? %>
 <%= will_paginate %>
 
 <table class="positions">
-  <td>
-  </td>
-  <td>
-    Name
-  </td>
-  <td>
-    Location
-  </td>
-  <td>
-    Application Deadline
-  </td>
-  <td>
-    Description
-  </td>
-  <td>
-    Duration
-  </td>
-  <td>
-    Institution Specific
-  </td>
-  <td>
-    Posted By
-  </td>
+  <tr>
+    <th></th>
+    <th><%= sortable "name" %></th>
+    <th><%= link_to "Location", "#" %></th>
+    <th><%= sortable "deadline", "Application Deadline" %></th>
+    <th><%= sortable "description" %></th>
+    <th><%= sortable "duration" %></th>
+    <th><%= link_to "Institution Specific", "#" %></th>
+    <th><%= link_to "Posted By", "#" %></th>
+  </tr>
+  
   <%= render @positions %>
 </table>
 

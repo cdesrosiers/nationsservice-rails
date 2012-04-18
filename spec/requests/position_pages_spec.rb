@@ -65,6 +65,9 @@ describe "Position pages" do
         end
       end
     end
+    
+    describe "search" do
+    end
   end
   
   describe "show" do

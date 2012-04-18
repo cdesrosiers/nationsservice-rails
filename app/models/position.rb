@@ -28,4 +28,14 @@ class Position < ActiveRecord::Base
   def remove_from!(locale)
     placements.find_by_locale_id(locale.id).destroy
   end
+  
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
+
+
 end

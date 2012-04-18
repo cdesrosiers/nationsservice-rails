@@ -1,3 +1,5 @@
+<%= provide(:title, 'Calendar View') %>
+<h1>Calendar View</h1>
 <div id="calendar">
   <%= link_to "List View", "/positions" %>
   <h2 id="month">
@@ -7,7 +9,7 @@
   </h2>
   <%= calendar_for @positions, year: @date.year, month: @date.month do |calendar| %>
     <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-    <%= calendar.day(day_method: :try_deadline) do |date, positions| %>
+    <%= calendar.day(day_method: :deadline) do |date, positions| %>
       <%= date.day %></br>
       <% if (positions.count > 0) %>
       <div id="fat-menu" class="dropdown">

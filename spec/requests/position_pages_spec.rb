@@ -53,20 +53,58 @@ describe "Position pages" do
     it { should have_selector('title', text: full_title('All Positions')) }
     
     describe "pagination" do
-      before(:all) { 31.times { FactoryGirl.create(:position) } }
+      before(:all) do
+        31.times { FactoryGirl.create(:position) }
+      end
       after(:all)  { Position.delete_all }
 
       it { should have_link('Next') }
       it { should have_link('2') }
 
       it "should list each position" do
-        Position.all[0..2].each do |position|
+        Position.find(:all, order: :name, limit: 3).each do |position|
           page.should have_selector('td', text: position.name)
         end
       end
     end
     
-    describe "search" do
+    describe "simple name search" do
+      it { should have_selector('input[@name="search"]') }
+      it { should have_selector('input[@type="submit"][@value="Search"]') }
+      
+      describe "should filter the list according to a search term" do
+        let(:search_term) { 'job' }
+        
+        before do
+          @job1 = FactoryGirl.create(:job, name: "This is a #{search_term} for computer programmers")
+          @job2 = FactoryGirl.create(:job, name: "This is an internship for computer programmers")
+          
+          fill_in 'search', with: search_term
+          click_button 'Search'
+        end
+        
+        it { should have_selector('a', href: position_path(@job1), text: @job1.name) }
+        it { should_not have_selector('a', href: position_path(@job2), text: @job2.name) }
+      end
+    end
+    
+    describe "calendar view" do
+      
+      it { should have_selector('a', href: calview_path, text: 'Calendar View') }
+      
+      describe "page" do
+        before do
+          click_link 'Calendar View'
+        end
+        
+        it { should have_selector('title', text: full_title('Calendar View')) }
+        it { should have_selector('h1', text: 'Calendar View') }
+        it { should have_selector('a', href: positions_path, text: 'List View') }
+        
+        it "should render deadlines on the correct day"
+        it "should not try to render positions without deadlines"
+          
+      end
     end
   end
   

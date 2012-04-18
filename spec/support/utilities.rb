@@ -1,3 +1,6 @@
+include ApplicationHelper
+include PositionsHelper
+
 def sign_in(user)
   visit signin_path
   fill_in "Email", with: user.email
@@ -5,3 +8,4 @@ def sign_in(user)
   click_button "Sign in"
   cookies[:remember_token] = user.remember_token
 end
+

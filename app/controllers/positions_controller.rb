@@ -5,9 +5,6 @@ class PositionsController < ApplicationController
   
   def show
     @position = Position.find(params[:id])
-    @city_name = city_name_for(@position)
-    @province_name = province_name_for(@position)
-    @country_name = country_name_for(@position)
   end
   
   def index

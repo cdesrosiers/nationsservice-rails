@@ -195,9 +195,12 @@ input, textarea, select, .uneditable-input {
       border-bottom: 1px solid $grayLighter
     }
     td {
-        border-left: 1px solid $grayLighter;
-        border-right: 1px solid $grayLighter;
+        padding: 5px;
+        // border-left: 1px solid $grayLighter;
+        // border-right: 1px solid $grayLighter;
     }
+    &:nth-child(odd) { background-color:#eee; }
+    &:nth-child(even) { background-color:#fff; }
   }
 }
 

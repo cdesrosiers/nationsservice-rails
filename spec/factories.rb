@@ -8,15 +8,23 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
+    
+    factory :user_with_institution do
+      institution :institution
+      
+      factory :user_with_institution_and_campus do
+        campus :campus
+      end
+    end
   end
   
   factory :institution do
-    sequence(:name) { |n| "University #{n} of Foobar" }
-    sequence(:state) { |n| "S#{n}" }
+    sequence(:name) { |n| "City University of New York #{n}" }
+    sequence(:state){ |n| "New York" }
   end
   
   factory :campus do
-    sequence(:name) { |n| "Campus #{n}" }
+    name "Queens College"
     institution
   end
   
@@ -29,9 +37,6 @@ FactoryGirl.define do
   factory :position do
     sequence(:name) { |n| "Fellowhip #{n}" }
     sequence(:description) { |n| "This is the description of fellowship number #{n}"}
-    sequence(:location_city) { |n| "Lincoln" }
-    sequence(:location_state) { |n| "NE" }
-    sequence(:location_country) { |n| "US" }
     sequence(:deadline) { Time.now.strftime("%Y-%m-%d") }
     sequence(:logo_path) { |n| "pic{n}.jpg"}
     sequence(:position_type) { 0 }

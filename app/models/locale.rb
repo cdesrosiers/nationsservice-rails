@@ -5,6 +5,7 @@ class Locale < ActiveRecord::Base
   
   validate :should_have_province_selected_if_possible
   validate :should_not_have_province_selected_if_impossible
+  validate :should_have_valid_province
   validate :country, :presence
   
   # don't allow locales in which a country and city are specified without a province, if the the country has provinces
@@ -13,9 +14,14 @@ class Locale < ActiveRecord::Base
   def should_have_province_selected_if_possible
     errors.add(:province, "Please choose a state/province for this locale") if (has_provinces and (province.nil? or province.blank?) and (!city.nil? and !city.blank?))
   end
+  
+  def should_have_valid_province
+    if has_provinces and (!province.nil? and !province.blank?)
+      errors.add(:province, "Please choose a valid state/province for this locale") if !Carmen.state_codes(country).include?(province)
+    end
+  end
       
   def should_not_have_province_selected_if_impossible
-    # should never get here through browser
     errors.add(:province, "There are no states/provinces available for this country") if (!has_provinces and !(province.nil? or province.blank?))
   end
   private

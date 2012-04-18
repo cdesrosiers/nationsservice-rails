@@ -5,29 +5,19 @@
       <%= logo_for @position %>
       </h2>
       <p>
-        Application deadline:
-        <% if !@position.deadline.nil? %>
-          <%= @position.deadline.to_s(:long) %>
-          </br>
-        <% end %>
-        <% if !@province_name.blank? %>
-          State/Province: <%= @province_name %></br>
-        <% end %>
-        <% if !@country_name.blank? %>
-          Country: <%= @country_name %></br>
-        <% end %>
-        Type: <%= position_type @position %></br>
-        <% if !@position.description.nil? %>
-          <%= @position.description %></br>
-        <% end %>
-        <% if signed_in? %>
-          <%= link_to "Edit Position", edit_position_path(@position) %>
-        <% end %>
+        <%= full_deadline(@position.deadline) %></br>
+        <%= full_position_type(@position.position_type) %></br>
+        <%= full_description(@position) %></br>
+        Location:
+        <%= 'N/A' if @position.locales.empty? %></br>
         <ul class="locale-list">
           <% for locale in @position.locales %>
             <li><%= locale_name_short(locale) %></li>
           <% end %>
         </ul>
+        <% if signed_in? %>
+          <%= link_to "Edit Position", edit_position_path(@position) %>
+        <% end %>
       </p>
   </div>
 </div>

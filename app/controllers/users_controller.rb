@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
+  before_filter :already_signed_in_user, only: [:new]
   
   def new
     @user = User.new
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to Nations' Service!"
       redirect_to @user
     else
+      prefill_institution_form
       render 'new'
     end
   end
@@ -57,6 +59,12 @@ class UsersController < ApplicationController
       unless signed_in?
         store_location
         redirect_to signin_path, notice: "Please sign in."
+      end
+    end
+    
+    def already_signed_in_user
+      if signed_in?
+        redirect_to root_path
       end
     end
     

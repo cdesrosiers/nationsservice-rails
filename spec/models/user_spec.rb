@@ -13,23 +13,34 @@ require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(name: "Example User", email: "user@example.com",
-                            password: "foobar", password_confirmation: "foobar") }
-
+  before do
+    @institution = Institution.create!(name: "University of Foobar", state: "Foobar")
+    @campus = @institution.campuses.create!(name: "East Campus")
+    @user = User.new(name: "Example User", email: "user@example.com",
+                     password: "foobar", password_confirmation: "foobar")
+    @user.institution = @institution
+    @user.campus = @campus
+  end
+  
   subject { @user }
-
+  
+  # attributes
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-  it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:institution_id) }
   it { should respond_to(:campus_id) }
-  it { should respond_to(:posted_positions) }
+  it { should respond_to(:gradyear) }
   
+  # methods
+  it { should respond_to(:authenticate) }
+  it { should respond_to(:institution) }
+  it { should respond_to(:campus) }
+  it { should respond_to(:posted_positions) }
   it { should be_valid }
   it { should_not be_admin }
   
@@ -50,8 +61,17 @@ describe User do
   end
   
   describe "when password is not present" do
-    before { @user.password = @user.password_confirmation = " " }
-    it { should_not be_valid }
+    
+    describe "and should be" do
+      before do
+        @user.updating_password = true
+        @user.password = @user.password_confirmation = " "
+      end
+      
+      it { should_not be_valid }
+    end
+    
+    it { should be_valid }
   end
   
   describe "when password doesn't match confirmation" do
@@ -116,8 +136,60 @@ describe User do
     end
   end
   
+  describe "with invalid graduation year" do
+    before { @user.gradyear = User::GRADYEAR_LOWER - 1 }
+    
+    it { should_not be_valid }
+  end
+  
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+  
+  describe "institution" do
+    its(:institution) { should == @institution }
+    its(:campus) { should == @campus }
+    
+    describe "when neither a campus nor an institution is specified" do
+      before do
+        @user.campus_id = nil
+        @user.institution_id = nil
+      end
+      
+      it { should be_valid }
+    end
+    
+    describe "when a campus is not specified but an institution is" do
+      before { @user.campus_id = nil }
+      
+      its(:campus) { should == nil }
+      it { should be_valid }
+    end
+    
+    describe "when a campus is not consistent with the institution" do
+      before do
+        @institution2 = FactoryGirl.create(:institution)
+        @campus2 = FactoryGirl.create(:campus, institution: @institution2)
+        @user.campus_id = @campus2.id
+      end
+      
+      it { should_not be_valid }
+    end
+  end
+  
+  describe "posted positions" do
+    before do
+      @user.save
+      fellowship = {name: "Fellowship", description: "This is a fellowship", position_type: 1}
+      internship = {name: "Internship", description: "This is an internship", position_type: 2}
+      
+      @fellowship = @user.posted_positions.create!(fellowship)
+      @internship = @user.posted_positions.create!(internship) 
+    end
+    
+    its(:posted_positions) { should include(@fellowship) }
+    its(:posted_positions) { should include(@internship) }
+    its(:posted_positions) { should have(2).items }
   end
 end

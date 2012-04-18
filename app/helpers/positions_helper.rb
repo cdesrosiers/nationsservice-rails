@@ -3,30 +3,28 @@ module PositionsHelper
     image_tag("#{position.logo_path}", alt: '', class: "round", width: options[:width]) unless (position.logo_path.nil? or position.logo_path.blank?)
   end
   
-  def country_name_for(position)
-    ""
+  def full_deadline(deadline)
+    "Application Deadline: #{deadline.nil? ? 'N/A' : deadline.to_s(:long) }"
   end
   
-  def province_name_for(position)
-    ""
+  def full_description(position)
+    "Description: #{position.description.nil? ? 'N/A' : position.description}"
   end
   
-  def city_name_for(position)
-    ""
-  end
-  
-  def position_type(position)
-    case position.position_type
+  def full_position_type(type)
+
+    base = "Type: "
+    case type
     when 0
-      'Other'
+      base + 'Other'
     when 1
-      'Fellowship'
+      base + 'Fellowship'
     when 2
-      'Internship'
+      base + 'Internship'
     when 3
-      'Job'
+      base + 'Job'
     else
-      ''
+      base + 'N/A'
     end
   end
   
@@ -50,11 +48,7 @@ module PositionsHelper
       ''
     end
   end
-  
-  def city_for(position)
-    ""    
-  end
-  
+    
   def locale_name_short(locale)
     ret = ""
     

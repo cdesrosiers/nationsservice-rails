@@ -6,8 +6,9 @@ def random_institution
                 Institution.first(offset: rand(Institution.count))
 end
 
-def random_campus(insitution)
-                institution.campuses.first(offset: rand(institution.campuses.count))
+def random_campus(institution)
+                ins = nil
+                ins = institution.campuses.first(offset: rand(institution.campuses.count)) unless institution.campuses.empty?
 end
 
 def random_locale
@@ -16,6 +17,10 @@ end
 
 def rand_small_int
                 (1..5).to_a.sample
+end
+
+def samp(lo,hi)
+                (lo..hi).to_a.sample
 end
 
 positions = [
@@ -36,15 +41,42 @@ positions = [
 ]
 
 def create_new_position(position_hash)
+                if (!position_hash[:overview].present?)
+                                position_hash[:overview] = Faker::Lorem.paragraph(20)
+                end
                 new_position = random_user.posted_positions.create!(position_hash)
                 
                 num_locales = rand_small_int
                 
                 num_locales.times do |n|
-                                new_position.place_in!(random_locale) unless new_position.placed_in?(random_locale)
+                                locale = random_locale
+                                new_position.place_in!(locale) unless new_position.placed_in?(locale)
+                end
+                
+                if([true,false].sample)
+                                ins = random_institution
+                                new_position.update_attributes(institution: ins, campus: random_campus(ins))             
                 end
 end
 
 for position in positions do
                 create_new_position(position)
+end
+
+99.times do |n|
+  name  = Faker::Company.name
+  description = Faker::Company.bs
+  deadline = "#{samp(2012,2013)}-#{samp(1,12)}-#{samp(1,29)}"
+  position_type = samp(0,3)
+  duration = samp(0,6)
+  overview = Faker::Lorem.paragraph(20)
+  
+  position_hash = {name: name,
+               description: description,
+               deadline: deadline,
+               position_type: position_type,
+               duration: duration,
+               overview: overview}
+  
+  create_new_position(position_hash)
 end

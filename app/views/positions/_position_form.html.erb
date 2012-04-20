@@ -70,5 +70,12 @@
         </div>
     </div>
     
+    <div id="edit-institution" class="row">
+        <div class="span7">
+            <%= f.label :overview %>
+            <%= f.text_area :overview, size: "20x15", maxlength: 1024 %>
+        </div>
+    </div>
+    
     <%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
 <% end %>

@@ -11,6 +11,10 @@ module PositionsHelper
     "Description: #{position.description.nil? ? 'N/A' : position.description}"
   end
   
+  def full_overview(position)
+    "Overview: #{position.overview.nil? ? 'N/A' : position.overview}"
+  end
+  
   def full_position_type(type)
 
     base = "Type: "

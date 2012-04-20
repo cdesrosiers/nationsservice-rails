@@ -18,6 +18,27 @@ describe "Position pages" do
     describe "page" do
       it { should have_selector('h1',    text: "Update this Position") }
       it { should have_selector('title', text: full_title("Edit Position")) }
+      
+      it { should have_selector('label', text: "Name") }
+      it { should have_selector('input[@name="position[name]"]')}
+      
+      it { should have_selector('label', text: "Description") }
+      it { should have_selector('input[@name="position[description]"]') }
+      
+      it { should have_selector('label', text: "Deadline") }
+      it { should have_selector('input[@name="position[deadline]"]') }
+      
+      it { should have_selector('label', text: "Position type") }
+      it { should have_selector('select[@name="position[position_type]"]')}
+      
+      it { should have_selector('label', text: "Duration") }
+      it { should have_selector('select[@name="position[duration]"]')}
+      
+      it { should have_selector('label', text: "Institution") }
+      it { should have_selector('select[@name="selected_institution[state]"]')}
+      
+      it { should have_selector('label', text: "Overview") }
+      it { should have_selector('input[@name="position[overview]"]')}
     end
 
     describe "with invalid information" do
@@ -116,6 +137,7 @@ describe "Position pages" do
     
     it { should have_selector('h2',    text: position.name) }
     it { should have_selector('title', text: full_title(position.name)) }
+    it { should have_content(full_overview(position)) }
     it { should have_content(full_deadline(position.deadline)) }
     it { should have_content(full_position_type(position.position_type)) }
     it { should have_content(full_description(position)) }

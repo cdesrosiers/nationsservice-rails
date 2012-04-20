@@ -7,10 +7,15 @@
       <p>
         <%= full_deadline(@position.deadline) %></br>
         <%= full_position_type(@position.position_type) %></br>
-        <%= full_description(@position) %></br>
-        Location:
+        <%= full_description(@position) %></br></br>
+        <div class="row">
+        <div span="span4">
+          <p></p><%= full_overview(@position) %></p></br>
+        </div>
+        </div>
         <%= 'N/A' if @position.locales.empty? %></br>
         <ul class="locale-list">
+          <%= "Location#{@position.locales.count == 1 ? '' : 's'}:" %>
           <% for locale in @position.locales %>
             <li><%= locale_name_short(locale) %></li>
           <% end %>

@@ -13,10 +13,21 @@ describe Position do
   it { should respond_to(:position_type) }
   it { should respond_to(:locales) }
   it { should respond_to(:placements) }
+  it { should respond_to(:overview) }
   
   it { should respond_to(:place_in!) }
   it { should respond_to(:placed_in?) }
   it { should respond_to(:remove_from!) }
+  
+  describe "overview that is too long" do
+    before { @position.overview = "a"*1025 }
+    it { should_not be_valid }
+  end
+  
+  describe "overview that is an acceptable length" do
+    before { @position.overview = "a"*1024 }
+    it { should be_valid }
+  end
   
   describe "placement" do
     let(:locale) { FactoryGirl.create(:locale) }    
@@ -34,5 +45,4 @@ describe Position do
       its(:locales) { should_not include(locale) }
     end
   end
-  
 end

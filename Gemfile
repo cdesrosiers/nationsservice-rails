@@ -39,3 +39,4 @@ end
 
 gem "watu_table_builder", :require => "table_builder"
 gem 'carmen', '0.2.13'
+gem 'thinking-sphinx', '2.0.11'

@@ -42,10 +42,7 @@
         <li>
           <%= link_to user.name, user %>
           <span class="float-right">
-          <% unless user.institution.nil? %>
-            <%= user.institution.name %>
-            <%= gradyear_short(user.gradyear) unless user.gradyear.nil? %>
-          <% end %>
+          <%= institution_for(user) %>
           </span>
         </li>
       <% end %>

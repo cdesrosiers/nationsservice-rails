@@ -6,11 +6,6 @@
   <% end %>
   
   <p>
-        <% if !user.institution_id.nil? %>
-          <%= Institution.find_by_id(user.institution_id).name %>
-          <% if !user.campus_id.nil? %>
-            - <%= Campus.find_by_id(user.campus_id).name %>
-          <% end %>
-        <% end %>
-      </p>
+        <%= institution_for(user) %>
+  </p>
 </li>

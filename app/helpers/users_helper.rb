@@ -6,4 +6,14 @@ module UsersHelper
     gravatar_url = "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+
+  # Returns the institution and grad year for a user (e.g University of Foobar '03)
+  def institution_for(user)
+    gradyear = user.gradyear.nil? ? '' : "#{gradyear_short(user.gradyear)}"
+    user.institution.nil? ? '' : "#{user.institution.name} #{gradyear}"
+  end
+
+  def gradyear_short(gradyear)
+    gradyear.nil? ? "" : "'#{gradyear.inspect[2..3]}"
+  end
 end

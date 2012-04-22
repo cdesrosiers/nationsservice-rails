@@ -38,7 +38,7 @@ describe "Position pages" do
       it { should have_selector('select[@name="selected_institution[state]"]')}
       
       it { should have_selector('label', text: "Overview") }
-      it { should have_selector('input[@name="position[overview]"]')}
+      it { should have_selector('textarea[@name="position[overview]"]')}
     end
 
     describe "with invalid information" do

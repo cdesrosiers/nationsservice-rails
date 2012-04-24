@@ -12,9 +12,22 @@ describe Locale do
   
   it { should respond_to(:positions) }
   it { should respond_to(:placements) }
+  it { should respond_to(:strrep) }
+  its(:strrep) { should_not be_nil }
   
   it { should be_valid }
   
+  describe "strrep" do
+    before { @test_locale = FactoryGirl.create(:locale, country: 'US', province: 'CA',
+      city: 'San Francisco') }
+    
+    subject { @test_locale }
+
+    its(:strrep) { should include("United States") }
+    its(:strrep) { should include("California") }
+    its(:strrep) { should include("San Francisco") }
+  end
+
   describe "positions" do
     
     let(:position) { FactoryGirl.create(:position) }

@@ -44,7 +44,7 @@ describe "Position pages" do
     describe "with invalid information" do
       before do
         select '',          from: 'Position type'
-        click_button "Save changes"
+        click_button "Save Changes"
       end
 
       it { should have_content('error') }
@@ -55,7 +55,7 @@ describe "Position pages" do
       before do
         fill_in "Name",               with: new_name
         select 'Fellowship',          from: 'Position type'
-        click_button "Save changes"
+        click_button "Save Changes"
       end
 
       it { should have_selector('title', text: new_name) }
@@ -69,14 +69,15 @@ describe "Position pages" do
     
     let(:position) { FactoryGirl.create(:position) }
     
-    before { visit positions_path }
+    before do
+      visit positions_path
+    end
     
     it { should have_selector('title', text: full_title('All Positions')) }
     
     describe "pagination" do
-      before(:all) do
-        31.times { FactoryGirl.create(:position) }
-      end
+      before(:all) { 31.times { FactoryGirl.create(:position) } }
+
       after(:all)  { Position.delete_all }
 
       it { should have_link('Next') }

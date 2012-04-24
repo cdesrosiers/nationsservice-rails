@@ -1,7 +1,7 @@
 class PositionsController < ApplicationController
   helper_attr :sort_column, :sort_direction
   include PositionsHelper
-  
+ 
   before_filter :signed_in_user, only: [:edit, :update, :new, :create]
   
   def show
@@ -10,7 +10,8 @@ class PositionsController < ApplicationController
   
   def index
     # FIX SQL INJECTION HOLE HERE
-    @positions = Position.search(params[:search])
+    @positions = Position.search(params[:search], page: params[:page],
+      per_page:30, order: "#{sort_column} #{sort_direction}")
   end
   
   def index_calview
@@ -116,7 +117,8 @@ class PositionsController < ApplicationController
     end
     
     def sort_column
-      Position.column_names.include?(params[:sort]) ? params[:sort] : "name"
+      (Position.column_names + Position::EXTRA_SORT_FIELDS)
+        .include?(params[:sort]) ? params[:sort] : "name"
     end
     
     def sort_direction

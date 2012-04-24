@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418204109) do
+ActiveRecord::Schema.define(:version => 20120424191032) do
 
   create_table "campus", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120418204109) do
   end
 
   add_index "campus", ["institution_id"], :name => "index_campus_on_institution_id"
+  add_index "campus", ["name"], :name => "index_campus_on_name"
 
   create_table "institutions", :force => true do |t|
     t.string   "name"
@@ -38,10 +39,10 @@ ActiveRecord::Schema.define(:version => 20120418204109) do
     t.string   "city"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "strrep"
   end
 
   add_index "locales", ["city"], :name => "index_locales_on_city"
-  add_index "locales", ["country", "province", "city"], :name => "index_locales_on_country_and_province_and_city", :unique => true
   add_index "locales", ["country"], :name => "index_locales_on_country"
   add_index "locales", ["province"], :name => "index_locales_on_province"
 

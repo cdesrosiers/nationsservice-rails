@@ -10,14 +10,16 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :institution, :campus, :gradyear, :institution_id, :campus_id
+  attr_accessible :name, :email, :password, :password_confirmation,
+    :institution, :campus, :gradyear, :institution_id, :campus_id
   attr_accessor :updating_password
   
   has_secure_password
   before_save :create_remember_token
   belongs_to :institution
   belongs_to :campus
-  has_many :posted_positions, class_name: 'Position', foreign_key: :posted_by
+  has_many :posted_positions, class_name: 'Position',
+   foreign_key: :posted_by
   
   GRADYEAR_UPPER = 2016
   GRADYEAR_LOWER = 1950

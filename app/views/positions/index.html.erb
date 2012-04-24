@@ -33,12 +33,12 @@
   <tr>
     <th></th>
     <th><%= sortable "name" %></th>
-    <th><%= link_to "Location", "#" %></th>
+    <th><%= sortable "location", "Location" %></th>
     <th><%= sortable "deadline", "Application Deadline" %></th>
     <th><%= sortable "description" %></th>
     <th><%= sortable "duration" %></th>
-    <th><%= link_to "Institution Specific", "#" %></th>
-    <th><%= link_to "Posted By", "#" %></th>
+    <th><%= sortable "institution", "Institution Specific" %></th>
+    <th><%= sortable "poster", "Posted By" %></th>
   </tr>
   
   <%= render @positions %>

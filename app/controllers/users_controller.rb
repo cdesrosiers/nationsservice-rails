@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    prefill_institution_form
   end
   
   def create
@@ -16,7 +15,6 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to Nations' Service!"
       redirect_to @user
     else
-      prefill_institution_form
       render 'new'
     end
   end
@@ -77,22 +75,4 @@ class UsersController < ApplicationController
       redirect_to(root_path) unless current_user.admin?
     end
     
-    def prefill_institution_form
-      if @user.institution_id.nil?
-        @selected_institution = Institution.new
-        if(params[:selected_institution].present? && params[:selected_institution][:state].present?)
-          @selected_institution.state = params[:selected_institution][:state]
-          @institutions = Institution.where("state = ?", @selected_institution.state).order(:name)
-        else
-          @institutions = []
-        end
-        @campuses = []
-      else
-        @selected_institution = Institution.find_by_id(@user.institution_id)
-        @institutions = Institution.where("state = ?", @selected_institution.state).order(:name)
-        @campuses = @selected_institution.campuses.any? ? @selected_institution.campuses : []
-      end
-    
-      @states = Institution.select(:state).uniq.reorder(:state)
-    end
 end

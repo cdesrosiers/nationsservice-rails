@@ -11,86 +11,59 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424191032) do
+ActiveRecord::Schema.define(:version => 20120413151751) do
 
-  create_table "campus", :force => true do |t|
-    t.string   "name"
-    t.integer  "institution_id"
+  create_table "locations", :force => true do |t|
+    t.string   "country",    :default => ""
+    t.string   "state",      :default => ""
+    t.string   "city",       :default => ""
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "locations", ["city"], :name => "index_locations_on_city"
+  add_index "locations", ["country", "state", "city"], :name => "index_locations_on_country_and_state_and_city", :unique => true
+  add_index "locations", ["country"], :name => "index_locations_on_country"
+  add_index "locations", ["state"], :name => "index_locations_on_state"
+
+  create_table "placements", :force => true do |t|
+    t.integer  "placeable_id"
+    t.string   "placeable_type"
+    t.integer  "location_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "campus", ["institution_id"], :name => "index_campus_on_institution_id"
-  add_index "campus", ["name"], :name => "index_campus_on_name"
-
-  create_table "institutions", :force => true do |t|
-    t.string   "name"
-    t.string   "state"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "institutions", ["name", "state"], :name => "index_institutions_on_name_and_state", :unique => true
-  add_index "institutions", ["state"], :name => "index_institutions_on_state"
-
-  create_table "locales", :force => true do |t|
-    t.string   "country"
-    t.string   "province"
-    t.string   "city"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "strrep"
-  end
-
-  add_index "locales", ["city"], :name => "index_locales_on_city"
-  add_index "locales", ["country"], :name => "index_locales_on_country"
-  add_index "locales", ["province"], :name => "index_locales_on_province"
-
-  create_table "placements", :force => true do |t|
-    t.integer  "position_id"
-    t.integer  "locale_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "placements", ["locale_id"], :name => "index_placements_on_locale_id"
-  add_index "placements", ["position_id", "locale_id"], :name => "index_placements_on_position_id_and_locale_id", :unique => true
-  add_index "placements", ["position_id"], :name => "index_placements_on_position_id"
+  add_index "placements", ["location_id"], :name => "index_placements_on_location_id"
+  add_index "placements", ["placeable_id", "placeable_type", "location_id"], :name => "uniqueness_index", :unique => true
+  add_index "placements", ["placeable_id"], :name => "index_placements_on_placeable_id"
 
   create_table "positions", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.date     "deadline"
-    t.string   "logo_path"
-    t.integer  "position_type"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.integer  "posted_by"
-    t.integer  "institution_id"
-    t.integer  "campus_id"
-    t.integer  "duration",       :limit => 2
-    t.string   "overview",       :limit => 1024
+    t.integer  "poster_id"
+    t.integer  "position_type", :limit => 2
+    t.integer  "duration",      :limit => 2
+    t.string   "overview",      :limit => 2047
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
-
-  add_index "positions", ["institution_id"], :name => "index_positions_on_institution_id"
-  add_index "positions", ["posted_by"], :name => "index_positions_on_posted_by"
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.integer  "gradyear"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
-    t.integer  "institution_id"
-    t.integer  "campus_id"
-    t.integer  "gradyear"
   end
 
-  add_index "users", ["campus_id"], :name => "index_users_on_campus_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["institution_id"], :name => "index_users_on_institution_id"
+  add_index "users", ["gradyear"], :name => "index_users_on_gradyear"
+  add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end

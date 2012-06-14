@@ -8,6 +8,9 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
 gem 'pg'
 gem 'nokogiri', '1.5.2'
+gem 'omniauth', '1.1.0'
+gem 'omniauth-twitter', '0.0.11'
+gem 'multi_json', '1.3.6'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

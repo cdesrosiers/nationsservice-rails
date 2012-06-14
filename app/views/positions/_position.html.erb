@@ -1,14 +1,13 @@
 <tr>
   <td>
-    <%= logo_for position, width: 100 %>
   </td>
   <td>
     <%= link_to position.name, position %>
   </td>
   <td>
     <ul class="locale-list">
-      <% for locale in position.locales %>
-        <li><%= locale_name_short(locale) %></li>
+      <% position.locations.each do |location| %>
+        <li><%= location_name_short(location) %></li>
       <% end %>
     </ul>
   </td>
@@ -28,11 +27,6 @@
     <% end %>
   </td>
   <td>
-    <% if !position.institution_id.nil? %>
-      <%= Institution.find_by_id(position.institution_id).name %>
-    <% else %>
-      Open
-    <% end %>
   </td>
   <td>
     <% if !position.poster.nil? %>

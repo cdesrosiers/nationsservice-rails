@@ -2,24 +2,26 @@
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id              :integer         not null, primary key
+#  name            :string(255)
+#  email           :string(255)
+#  gradyear        :integer
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean         default(FALSE)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation,
-    :institution, :campus, :gradyear, :institution_id, :campus_id
-  attr_accessor :updating_password
+  attr_accessible :name, :email, :password, :password_confirmation, :gradyear
   
   has_secure_password
   before_save :create_remember_token
-  belongs_to :institution
-  belongs_to :campus
-  has_many :posted_positions, class_name: 'Position',
-   foreign_key: :posted_by
+
+  has_many :posted_positions, class_name: 'Position', foreign_key: :poster_id
+  has_one :placement, as: :placeable, dependent: :destroy
+  has_one :location, through: :placement
   
   GRADYEAR_UPPER = 2016
   GRADYEAR_LOWER = 1950
@@ -36,24 +38,26 @@ class User < ActiveRecord::Base
   
   validate :gradyear_valid
   
-  validate :institution_valid
-  
-  def should_validate_password?
-    updating_password || new_record? || (!password.nil? && !password.blank?) || (!password_confirmation.nil? && !password_confirmation.blank?)
+  def place_in!(location_attr)
+    location_record = Location.add_location!(location_attr)
+    placement ? placement.update_attributes!(location_id: location_record.id) : create_placement!(location_id: location_record.id)
   end
-  
-  def gradyear_valid
-    errors.add(:gradyear, "Please select a valid graduation year") if (!gradyear.nil? and (gradyear < GRADYEAR_LOWER or gradyear > GRADYEAR_UPPER))
+
+  def remove_location!
+    placement.destroy
   end
-  
-  def institution_valid
-    institution_rec = Institution.find_by_id(institution_id)
-    campus_rec = institution_rec.nil? ? nil : institution_rec.campuses.find_by_id(campus_id)
-    
-    errors.add(:institution_id, "Invalid institution/campus combination") if (institution_rec.nil? and !institution_id.nil?) or (campus_rec.nil? and !campus_id.nil?)
-  end
-  
+
   private
+  
+    def should_validate_password?
+      new_record? || password.present? || password_confirmation.present?
+    end
+    
+    def gradyear_valid
+      return if gradyear.nil?
+      errors.add(:gradyear, "is not a valid graduation year") unless
+gradyear.between?(GRADYEAR_LOWER, GRADYEAR_UPPER)
+    end
     
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64

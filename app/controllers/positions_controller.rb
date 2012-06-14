@@ -10,8 +10,7 @@ class PositionsController < ApplicationController
   
   def index
     # FIX SQL INJECTION HOLE HERE
-    @positions = Position.search(params[:search], page: params[:page],
-      per_page:30, order: "#{sort_column} #{sort_direction}")
+    @positions = Position.paginate(page: params[:page])
   end
   
   def index_calview

@@ -1,4 +1,4 @@
-require 'nokogiri'
+
 
 def main
   doc = Nokogiri::HTML(open('us-colleges.html'))

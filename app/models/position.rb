@@ -1,17 +1,28 @@
+# == Schema Information
+#
+# Table name: positions
+#
+#  id            :integer         not null, primary key
+#  name          :string(255)
+#  description   :string(255)
+#  deadline      :date
+#  poster_id     :integer
+#  position_type :integer(2)
+#  duration      :integer(2)
+#  overview      :string(2047)
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
+#
+
 class Position < ActiveRecord::Base
-  attr_accessible :name, :description, :deadline, :position_type,
-    :institution_id, :campus_id, :institution, :campus, :duration, :overview,
-    :logo_path 
+  attr_accessible :name, :description, :deadline, :position_type, :duration,
+    :overview
   
-  belongs_to :poster, class_name: 'User', foreign_key: :posted_by
+  belongs_to :poster, class_name: 'User'
   
-  belongs_to :institution
+  has_many :placements, as: :placeable, dependent: :destroy
   
-  belongs_to :campus
-  
-  has_many :placements, dependent: :destroy
-  
-  has_many :locales, through: :placements
+  has_many :locations, through: :placements
   
   validates :name, presence: true
   
@@ -20,42 +31,20 @@ class Position < ActiveRecord::Base
   
   validates :description, presence: true
   
-  validates :overview, length: { maximum: 1024 }
+  validates :overview, length: { maximum: 2047 }
 
-  #validates :posted_by, presence: true
+  validates :poster_id, presence: true
   
-  def try_deadline
-    deadline? ? deadline : Date.new
-  end
-  
-  def placed_in?(locale)
-    placements.find_by_locale_id(locale.id)
-  end
-  
-  def place_in!(locale)
-    placements.create!(locale_id: locale.id)
-  end
-  
-  def place_in(locale)
-    placements.create(locale_id: locale.id)
-  end
-  
-  def remove_from!(locale)
-    placements.find_by_locale_id(locale.id).destroy
+  def place_in!(location_attr)
+    location_record = Location.add_location!(location_attr)
+    placements.create!(location_id: location_record.id) unless placed_in?(location_record)
   end
 
-  # names of sortable fields not explicitly in the positions table
-  EXTRA_SORT_FIELDS = %w[institution poster location]
-
-  define_index do
-    indexes overview
-    indexes :name, sortable: true
-    indexes description, sortable: true
-    indexes locales.strrep, as: :location, sortable: true
-    indexes poster.name, as: :poster, sortable: true
-    indexes institution.name, as: :institution, sortable: true
-    indexes campus.name
-    has duration
-    has deadline
+  def placed_in?(location_record)
+    placements.find_by_location_id(location_record.id).present?
+  end
+  
+  def remove_from!(location_record)
+    placements.find_by_location_id(location_record.id).destroy
   end
 end

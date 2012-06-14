@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: placements
+#
+#  placeable_id   :integer
+#  placeable_type :string(255)
+#  location_id    :integer
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
+#
+
 require 'spec_helper'
 
 describe Placement do

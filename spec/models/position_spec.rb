@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: positions
+#
+#  id            :integer         not null, primary key
+#  name          :string(255)
+#  description   :string(255)
+#  deadline      :date
+#  poster_id     :integer
+#  position_type :integer(2)
+#  duration      :integer(2)
+#  overview      :string(2047)
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
+#
+
 require 'spec_helper'
 
 describe Position do

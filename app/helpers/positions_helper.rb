@@ -53,23 +53,23 @@ module PositionsHelper
     end
   end
     
-  def locale_name_short(locale)
+  def location_name_short(location)
     ret = ""
     
-    ret << locale.city unless locale.city.nil?
+    ret << location.city unless location.city.nil?
     
-    if locale.country == 'US'
-      if (!locale.city.nil? and !locale.city.blank?)
-        ret << ", #{locale.province}" unless locale.city.nil?
+    if location.country == 'US'
+      if (!location.city.nil? and !location.city.blank?)
+        ret << ", #{Carmen.state_name(location.state)}" unless location.city.nil?
       else
-        ret << "#{Carmen.state_name(locale.province)}" unless locale.city.nil?
+        ret << "#{Carmen.state_name(location.state)}" unless location.city.nil?
       end
     else
-      if (!locale.city.nil? and !locale.city.blank?)
-        ret << ", #{Carmen.country_name(locale.country)}"
+      if (!location.city.nil? and !location.city.blank?)
+        ret << ", #{Carmen.country_name(location.country)}"
       else
-        ret << "#{Carmen.state_name(locale.province, locale.country)}, " unless locale.province.nil?
-        ret << "#{Carmen.country_name(locale.country)}"
+        ret << "#{Carmen.state_name(location.state, location.country)}, " unless location.state.nil?
+        ret << "#{Carmen.country_name(location.country)}"
       end
     end
     ret

@@ -3,12 +3,11 @@ class CreatePositions < ActiveRecord::Migration
     create_table :positions do |t|
       t.string :name
       t.string :description
-      t.string :location_city
-      t.string :location_state
-      t.string :location_country
       t.date :deadline
-      t.string :logo_path
-      t.integer :position_type
+      t.integer :poster_id
+      t.integer :position_type, limit: 1
+      t.integer :duration, limit: 1
+      t.string :overview, limit: 2047
 
       t.timestamps
     end

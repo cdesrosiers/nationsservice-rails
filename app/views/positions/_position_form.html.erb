@@ -52,11 +52,15 @@
     
     <div id="edit-institution" class="row">
         <div class="span2">
-            <%= collection_select :selected_institution, :state, @states, :state, :state, { prompt: 'Select a state' }, action: "/update_institutions_list" %>
+            <%= collection_select :selected_institution, :state, @states,
+:state, :state, { prompt: 'Select a state' }, action:
+"/update_institutions_list", name: "my_hash[a_key]" %>
         </div>
         <div class="span3">
             <% if @institutions.any? %>
-                <%= f.collection_select :institution_id, @institutions, :id, :name, { prompt: "Select an Institution" }, action: "/update_campuses_list", id: "institution_select"  %>
+                <%= f.collection_select :institution_id, @institutions, :id,
+:name, { prompt: "Select an Institution" }, action: "/update_campuses_list",
+id: "institution_select" %>
             <% else %>
                 <%= f.collection_select :institution_id, [], :id, :name, { prompt: "Select an Institution" }, { action: "/update_campuses_list", id: "institution_select", disabled: true } %>
             <% end %>

@@ -1,6 +1,0 @@
-<% if @provinces.any? %>
-$('#<%= @elem_id %> > .province-dd').replaceWith('<%= escape_javascript(select_tag "locales[][province]", options_for_select(@provinces), { prompt: "Select a State/Province", class: "span3 province-dd"}) %>');
-<% else %>
-$('#<%= @elem_id %> > .province-dd').replaceWith('<%= escape_javascript(select_tag "locales[][province]", options_for_select([]), { prompt: "Select a State/Province", class: "span3 province-dd"}) %>');
-$('#<%= @elem_id %> > .province-dd').attr('disabled', 'true');
-<% end %>

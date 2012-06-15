@@ -11,6 +11,7 @@ gem 'nokogiri', '1.5.2'
 gem 'omniauth', '1.1.0'
 gem 'omniauth-twitter', '0.0.11'
 gem 'multi_json', '1.3.6'
+gem 'devise', '2.1.0'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

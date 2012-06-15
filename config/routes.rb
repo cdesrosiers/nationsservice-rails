@@ -1,7 +1,10 @@
 Nationsservice::Application.routes.draw do
-  resources :users
+
+  devise_for :users, controllers: { registrations: 'registrations' }
+
+  match 'auth/:provider/callback', to: 'authentications#create'
+  resources :authentications, only: [ :create, :destroy, :index ]
   resources :positions
-  resources :sessions, only: [:new, :create, :destroy]
 
   root to: 'static_pages#home'
   
@@ -11,22 +14,6 @@ Nationsservice::Application.routes.draw do
   
   match '/contact', to: 'static_pages#contact'
   
-  match '/signup', to: 'users#new'
-  
-  match '/signin', to: 'sessions#new'
-  
-  match '/signout', to: 'sessions#destroy', via: :delete
-  
-  match '/update_institutions_list', to: 'ajax#update_institutions_list'
-  
-  match '/update_campuses_list', to: 'ajax#update_campuses_list'
-  
-  match '/update_provinces_list', to: 'ajax#update_provinces_list'
-  
-  match '/calview', to: 'positions#index_calview'
-  
-  match '/newposition', to: 'positions#new'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

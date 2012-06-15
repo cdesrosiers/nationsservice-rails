@@ -1,9 +1,0 @@
-<% if @institutions.any? %>
-$('#institution_select').html('<option>Select an Institution</option><%= escape_javascript(options_for_select(@institutions.map {|ins| [ins.name, ins.id]})) %>');
-$('#institution_select').removeAttr('disabled');
-<% else %>
-$('#institution_select').html('<option value="">Select an Institution</option>');
-$('#institution_select').attr('disabled', 'true');
-<% end %>
-$('#campus_select').html('<option value="">Select a Campus</option>');
-$('#campus_select').attr('disabled', 'true');
